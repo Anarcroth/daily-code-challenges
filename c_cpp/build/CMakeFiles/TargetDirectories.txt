@@ -1,3 +1,0 @@
-/home/mdn/daily-code-challenges/c_cpp/build/CMakeFiles/edit_cache.dir
-/home/mdn/daily-code-challenges/c_cpp/build/CMakeFiles/rebuild_cache.dir
-/home/mdn/daily-code-challenges/c_cpp/build/CMakeFiles/daily-code-challenges.dir
