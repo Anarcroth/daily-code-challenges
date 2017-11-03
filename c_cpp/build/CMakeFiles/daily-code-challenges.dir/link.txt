@@ -1,0 +1,1 @@
+/usr/bin/c++     CMakeFiles/daily-code-challenges.dir/src/cannibal_numbers.cpp.o  -o daily-code-challenges 

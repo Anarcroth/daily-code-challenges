@@ -1,0 +1,16 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/mdn/daily-code-challenges/c_cpp/src/cannibal_numbers.cpp
+iostream
+-
+algorithm
+-
+vector
+-
+
