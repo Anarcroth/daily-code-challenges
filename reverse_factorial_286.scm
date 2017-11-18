@@ -1,0 +1,8 @@
+(define (reverse-factorial x)
+  (calc-fact-rev x 1))
+(define (calc-fact-rev x n)
+  (if (= (modulo x n) 0)
+      (if (= (/ x n) 1)
+          (string-append (number->string x) "!")
+          (calc-fact-rev (/ x n) (+ n 1)))
+      "NONE"))
