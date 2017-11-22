@@ -31,8 +31,7 @@
 #include <string>
 #include <algorithm>
 #include <vector>
-
-double dist(char s);
+#include <cmath>
 
 std::vector< std::vector<char> > keypad = {{'1', '2', '3'}, {'4', '5', '6'}, {'7', '8', '9'}, {'.', '0', ' '}};
 
@@ -42,28 +41,46 @@ int main()
 
   std::getline(std::cin, ipaddress);
   double distance = 0;
-  for (auto& s : ipaddress)
+  for (size_t s1 = 0; s1 < ipaddress.size() - 1; s1++)
     {
-      distance += dist(s);
+      char s = ipaddress[s1];
+      char ns = ipaddress[s1 + 1];
+
+      int y_ns, y_s, x_ns, x_s;
+
+      for (int x = 0; x < keypad[x].size(); x++)
+        {
+          auto it_ns = std::find(keypad[x].begin(), keypad[x].end(), ns);
+          auto it_s = std::find(keypad[x].begin(), keypad[x].end(), s);
+          if (it_s != keypad[x].end())
+            {
+              y_s = std::distance(keypad[x].begin(), it_s);
+              x_s = x;
+            }
+          if (it_ns != keypad[x].end())
+            {
+              y_ns = std::distance(keypad[x].begin(), it_ns);
+              x_ns = x;
+            }
+        }
+
+      std::cout << "y_ns: " << y_ns << " y_s; " << y_s << " x_ns; " << x_ns << " x_s" << x_s;
+
+      if (x_s != x_ns && y_s != y_ns)
+        {
+          distance += std::sqrt(std::pow(std::abs(y_s - y_ns), 2) + std::pow(std::abs(x_s - x_ns), 2));
+        }
+      else if (x_s == x_ns)
+        {
+          distance += std::abs(y_ns - y_s);
+        }
+      else
+        {
+          distance += std::abs(x_ns - x_s);
+        }
     }
 
   std::cout << "The distance which Clarence typed is " << distance << std::endl;
 
   return 0;
-}
-
-double dist(char s)
-{
-  char ns = ++s;
-  for (int i = 0; i < keypad[i].size(); i++)
-    {
-      for (int j = 0; j < keypad[j].size(); j++)
-        {
-          if (ns == keypad[i][j])
-            {
-            }
-        }
-    }
-
-  return 0.1;
 }
