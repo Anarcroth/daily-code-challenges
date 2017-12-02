@@ -63,16 +63,31 @@ void ToDoList::addItem(std::string item)
 
 void ToDoList::deleteItem(std::string item)
 {
-  todo_list.erase(std::remove(todo_list.begin(), todo_list.end(), item), todo_list.end());
+  if (todo_list.empty())
+    {
+      std::cout << "ToDo list is empty" << std::endl;
+    }
+  else
+    {
+      todo_list.erase(std::remove(todo_list.begin(), todo_list.end(), item), todo_list.end());
+    }
 }
 
 void ToDoList::viewList()
 {
-  //std::for_each(todo_list.begin(), todo_list.end(), [&](std::string item){std::cout << item << std::endl;});
-  for (std::string s : todo_list)
+  if (todo_list.empty())
     {
-      std::cout << s << std::endl;
+      std::cout << "ToDo list is empty" << std::endl;
     }
+  else
+    {
+      for (std::string s : todo_list)
+        {
+          std::cout << s << std::endl;
+        }
+      //std::for_each(todo_list.begin(), todo_list.end(), [&](std::string item){std::cout << item << std::endl;});
+    }
+
 }
 
 ToDoList::~ToDoList()
@@ -94,6 +109,11 @@ int main()
   list.deleteItem("code");
 
   std::cout << "TODO list after" << std::endl;
+
+  list.viewList();
+
+  list.deleteItem("clean room");
+  list.deleteItem("stuff");
 
   list.viewList();
 
