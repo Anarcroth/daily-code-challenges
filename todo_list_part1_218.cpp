@@ -81,11 +81,7 @@ void ToDoList::viewList()
     }
   else
     {
-      for (std::string s : todo_list)
-        {
-          std::cout << s << std::endl;
-        }
-      //std::for_each(todo_list.begin(), todo_list.end(), [&](std::string item){std::cout << item << std::endl;});
+      std::for_each(todo_list.begin(), todo_list.end(), [&](std::string item){std::cout << item << std::endl;});
     }
 
 }
