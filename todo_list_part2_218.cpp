@@ -54,13 +54,14 @@
 #include <string>
 #include <vector>
 #include <algorithm>
+#include <map>
 #include <initializer_list>
 
 template<class T>
 class ToDoList
 {
 private:
-  std::vector<T> todo_list;
+  std::map<T, std::vector<T> > todo_list;
 
 public:
   ToDoList();
@@ -86,7 +87,10 @@ ToDoList<T>::ToDoList(std::vector<T> list) : todo_list(list)
 template<class T>
 void ToDoList<T>::addItem(T item, std::initializer_list<T> categories)
 {
-  todo_list.push_back(item);
+  for (auto s : categories)
+    {
+      todo_list[s].push_back(item);
+    }
 }
 
 template<class T>
@@ -98,19 +102,31 @@ void ToDoList<T>::deleteItem(T item)
     }
   else
     {
-      todo_list.erase(std::remove(todo_list.begin(), todo_list.end(), item), todo_list.end());
+      for (auto s : todo_list)
+        {
+          s.second.erase(std::remove(s.second.begin(), s.second.end(), item), s.second.end());
+          if (s.second.empty())
+            {
+              //TODO delete the category if it's empty
+            }
+        }
     }
 }
 
 template<class T>
 void ToDoList<T>::updateItem(T old_item, T new_item)
 {
-  std::for_each(todo_list.begin(), todo_list.end(), [&](T& it){
-      if (old_item == it)
-        {
-          it = new_item;
-        }
-    });
+  for (auto s : todo_list)
+    {
+      std::for_each(s.second.begin(), s.second.end(), [&](T& it)
+                    {
+                      if (old_item == it)
+                        {
+                          it = new_item;
+                        }
+                    });
+    }
+
 }
 
 template<class T>
@@ -122,9 +138,12 @@ void ToDoList<T>::viewList()
     }
   else
     {
-      std::for_each(todo_list.begin(), todo_list.end(), [&](T item){std::cout << item << std::endl;});
+      for (auto s : todo_list)
+        {
+          std::cout << "--- " << s.first << " ---" << std::endl;
+          std::for_each(s.second.begin(), s.second.end(), [&](T& item){std::cout << item << std::endl;});
+        }
     }
-
 }
 
 template<class T>
@@ -137,7 +156,7 @@ int main()
 {
   ToDoList<std::string> list;
 
-  list.addItem("clean room", {"Daily deeds", "My life is getting better"});
+  list.addItem("clean room", {"Daily deeds"});
   list.addItem("code", {"Programming"});
 
   std::cout << "TODO list before" << std::endl;
