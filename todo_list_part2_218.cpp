@@ -54,36 +54,43 @@
 #include <string>
 #include <vector>
 #include <algorithm>
+#include <initializer_list>
 
+template<class T>
 class ToDoList
 {
 private:
-  std::vector<std::string> todo_list;
+  std::vector<T> todo_list;
 
 public:
   ToDoList();
-  ToDoList(std::vector<std::string> list);
+  ToDoList(std::vector<T> list);
   ~ToDoList();
 
-  void addItem(std::string item);
-  void deleteItem(std::string item);
+  void addItem(T item, std::initializer_list<T> categories);
+  void deleteItem(T item);
+  void updateItem(T old_item, T new_item);
   void viewList();
 };
 
-ToDoList::ToDoList()
+template<class T>
+ToDoList<T>::ToDoList()
 {
 }
 
-ToDoList::ToDoList(std::vector<std::string> list) : todo_list(list)
+template<class T>
+ToDoList<T>::ToDoList(std::vector<T> list) : todo_list(list)
 {
 }
 
-void ToDoList::addItem(std::string item)
+template<class T>
+void ToDoList<T>::addItem(T item, std::initializer_list<T> categories)
 {
   todo_list.push_back(item);
 }
 
-void ToDoList::deleteItem(std::string item)
+template<class T>
+void ToDoList<T>::deleteItem(T item)
 {
   if (todo_list.empty())
     {
@@ -95,7 +102,19 @@ void ToDoList::deleteItem(std::string item)
     }
 }
 
-void ToDoList::viewList()
+template<class T>
+void ToDoList<T>::updateItem(T old_item, T new_item)
+{
+  std::for_each(todo_list.begin(), todo_list.end(), [&](T& it){
+      if (old_item == it)
+        {
+          it = new_item;
+        }
+    });
+}
+
+template<class T>
+void ToDoList<T>::viewList()
 {
   if (todo_list.empty())
     {
@@ -103,22 +122,23 @@ void ToDoList::viewList()
     }
   else
     {
-      std::for_each(todo_list.begin(), todo_list.end(), [&](std::string item){std::cout << item << std::endl;});
+      std::for_each(todo_list.begin(), todo_list.end(), [&](T item){std::cout << item << std::endl;});
     }
 
 }
 
-ToDoList::~ToDoList()
+template<class T>
+ToDoList<T>::~ToDoList()
 {
   todo_list.clear();
 }
 
 int main()
 {
-  ToDoList list;
+  ToDoList<std::string> list;
 
-  list.addItem("clean room");
-  list.addItem("code");
+  list.addItem("clean room", {"Daily deeds", "My life is getting better"});
+  list.addItem("code", {"Programming"});
 
   std::cout << "TODO list before" << std::endl;
 
@@ -133,6 +153,11 @@ int main()
   list.deleteItem("clean room");
   list.deleteItem("stuff");
 
+  list.viewList();
+
+  list.addItem("workout", {"Sports"});
+  list.viewList();
+  list.updateItem("workout", "run");
   list.viewList();
 
   return 0;
