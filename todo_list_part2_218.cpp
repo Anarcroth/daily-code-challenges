@@ -56,6 +56,9 @@
 #include <fstream>
 #include <algorithm>
 #include <map>
+#include <utility>
+#include <iterator>
+#include <sstream>
 #include <initializer_list>
 
 template<class T>
@@ -167,6 +170,7 @@ void ToDoList<T>::saveList()
 template<class T>
 ToDoList<T>::~ToDoList()
 {
+  todo_list.saveList();
   todo_list.clear();
 }
 
@@ -174,30 +178,48 @@ int main()
 {
   ToDoList<std::string> list;
 
-  list.addItem("clean room", {"Daily deeds"});
-  list.addItem("code", {"Programming"});
+  int answr = 0;
 
-  std::cout << "TODO list before" << std::endl;
+  std::string input1 = "", input2 = "";
+  std::vector<std::string> args;
 
-  list.viewList();
+  std::cout << "Welcome to your ToDo List" << std::endl;
+  std::cout << "1. Add an item and category." << std::endl;
+  std::cout << "2. Delete an item." << std::endl;
+  std::cout << "3. Update and item." << std::endl;
+  std::cout << "4. View your list." << std::endl;
+  std::cout << "5. Save and quit." << std::endl;
 
-  list.deleteItem("code");
-
-  std::cout << "TODO list after" << std::endl;
-
-  list.viewList();
-
-  list.deleteItem("clean room");
-  list.deleteItem("stuff");
-
-  list.viewList();
-
-  list.addItem("workout", {"Sports"});
-  list.viewList();
-  list.updateItem("workout", "run");
-  list.viewList();
-
-  list.saveList();
+  while (answr != 5)
+    {
+    switch (answr)
+      {
+      case 1:
+        std::cout << "Enter an item: ";
+        std::getline(std::cin, input1);
+        std::cout << "Enter category(ies), separated by a space: ";
+        std::getline(std::cin, input2);
+        std::istringstream buf(input2);
+        std::istream_iterator<std::string> beg(buf), end;
+        std::vector<std::string> tokens(beg, end);
+        //TODO make function to get input and return a vector with all of the items and categories
+        //list.addItem(input1, {tokens}); break;
+      case 2:
+        std::cout << "Enter an item: ";
+        std::getline(std::cin, input1);
+        list.deleteItem(input1); break;
+      case 3:
+        std::cout << "Enter old item: ";
+        std::getline(std::cin, input1);
+        std::cout << "Enter new item: ";
+        std::getline(std::cin, input2);
+        list.updateItem(input1, input2); break;
+      case 4:
+        list.viewList(); break;
+      default:
+        break;
+      }
+    }
 
   return 0;
 }
