@@ -118,17 +118,10 @@ void ToDoList<T>::deleteItem(T item)
 template<class T>
 void ToDoList<T>::updateItem(T old_item, T new_item)
 {
-  for (auto s : todo_list)
+  for (auto& s : todo_list)
     {
-      std::for_each(s.second.begin(), s.second.end(), [&](T& it)
-                    {
-                      if (old_item == it)
-                        {
-                          it = new_item;
-                        }
-                    });
+       std::for_each(s.second.begin(), s.second.end(), [&](T& it) { if (old_item == it) it = new_item; });
     }
-
 }
 
 template<class T>
