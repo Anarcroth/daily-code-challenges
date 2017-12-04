@@ -104,12 +104,12 @@ void ToDoList<T>::deleteItem(T item)
     }
   else
     {
-      for (auto s : todo_list)
+      for (auto& s : todo_list)
         {
           s.second.erase(std::remove(s.second.begin(), s.second.end(), item), s.second.end());
           if (s.second.empty())
             {
-              //TODO delete the category if it's empty
+              todo_list.erase(s.first);
             }
         }
     }
