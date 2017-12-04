@@ -53,6 +53,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <fstream>
 #include <algorithm>
 #include <map>
 #include <initializer_list>
@@ -69,8 +70,9 @@ public:
   ~ToDoList();
 
   void addItem(T item, std::initializer_list<T> categories);
-  void deleteItem(T item);
   void updateItem(T old_item, T new_item);
+  void deleteItem(T item);
+  void saveList();
   void viewList();
 };
 
@@ -147,6 +149,29 @@ void ToDoList<T>::viewList()
 }
 
 template<class T>
+void ToDoList<T>::saveList()
+{
+  std::ofstream in("todo-list.txt");
+  if (in.is_open())
+    {
+      for (auto& s : todo_list)
+        {
+          in << "--- " + s.first + " ---\n";
+          for (auto& z : s.second)
+            {
+              in << z + "\n";
+            }
+        }
+      in.close();
+    }
+  else
+    {
+      // TODO use a try catch block
+      std::cout << "Unable to open file" << std::endl;
+    }
+}
+
+template<class T>
 ToDoList<T>::~ToDoList()
 {
   todo_list.clear();
@@ -178,6 +203,8 @@ int main()
   list.viewList();
   list.updateItem("workout", "run");
   list.viewList();
+
+  list.saveList();
 
   return 0;
 }
