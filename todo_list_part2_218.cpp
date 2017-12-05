@@ -72,7 +72,7 @@ public:
   ToDoList(std::vector<T> list);
   ~ToDoList();
 
-  void addItem(T item, std::initializer_list<T> categories);
+  void addItem(T item, std::vector<T> categories);
   void updateItem(T old_item, T new_item);
   void deleteItem(T item);
   void saveList();
@@ -90,9 +90,9 @@ ToDoList<T>::ToDoList(std::vector<T> list) : todo_list(list)
 }
 
 template<class T>
-void ToDoList<T>::addItem(T item, std::initializer_list<T> categories)
+void ToDoList<T>::addItem(T item, std::vector<T> categories)
 {
-  for (auto s : categories)
+  for (auto & s : categories)
     {
       todo_list[s].push_back(item);
     }
@@ -162,7 +162,6 @@ void ToDoList<T>::saveList()
     }
   else
     {
-      // TODO use a try catch block
       std::cout << "Unable to open file" << std::endl;
     }
 }
@@ -170,18 +169,19 @@ void ToDoList<T>::saveList()
 template<class T>
 ToDoList<T>::~ToDoList()
 {
-  todo_list.saveList();
+  this->saveList();
   todo_list.clear();
 }
+
+std::vector<std::string> get_categories();
 
 int main()
 {
   ToDoList<std::string> list;
 
-  int answr = 0;
+  int answr;
 
   std::string input1 = "", input2 = "";
-  std::vector<std::string> args;
 
   std::cout << "Welcome to your ToDo List" << std::endl;
   std::cout << "1. Add an item and category." << std::endl;
@@ -190,36 +190,51 @@ int main()
   std::cout << "4. View your list." << std::endl;
   std::cout << "5. Save and quit." << std::endl;
 
-  while (answr != 5)
+  do
     {
-    switch (answr)
-      {
-      case 1:
-        std::cout << "Enter an item: ";
-        std::getline(std::cin, input1);
-        std::cout << "Enter category(ies), separated by a space: ";
-        std::getline(std::cin, input2);
-        std::istringstream buf(input2);
-        std::istream_iterator<std::string> beg(buf), end;
-        std::vector<std::string> tokens(beg, end);
-        //TODO make function to get input and return a vector with all of the items and categories
-        //list.addItem(input1, {tokens}); break;
-      case 2:
-        std::cout << "Enter an item: ";
-        std::getline(std::cin, input1);
-        list.deleteItem(input1); break;
-      case 3:
-        std::cout << "Enter old item: ";
-        std::getline(std::cin, input1);
-        std::cout << "Enter new item: ";
-        std::getline(std::cin, input2);
-        list.updateItem(input1, input2); break;
-      case 4:
-        list.viewList(); break;
-      default:
-        break;
-      }
-    }
+      std::cout << "Enter action: ";
+      std::cin >> answr;
+
+      switch (answr)
+        {
+        case 1:
+          {
+            std::cout << "Enter an item: ";
+            std::cin >> input1;
+            std::vector<std::string> categories = get_categories();
+            list.addItem(input1, categories); break;
+          }
+        case 2:
+          std::cout << "Enter an item: ";
+          std::getline(std::cin, input1);
+          list.deleteItem(input1); break;
+        case 3:
+          std::cout << "Enter old item: ";
+          std::getline(std::cin, input1);
+          std::cout << "Enter new item: ";
+          std::getline(std::cin, input2);
+          list.updateItem(input1, input2); break;
+        case 4:
+          list.viewList(); break;
+        case 5:
+          std::cout << "Bye!" << std::endl;
+          exit(0);
+        default:
+          continue;
+        }
+    } while (answr);
 
   return 0;
+}
+
+std::vector<std::string> get_categories()
+{
+  std::string input = "";
+  std::cout << "Enter category(ies), separated by a space: ";
+  std::cin >> input;
+  std::getline(std::cin, input);
+  std::istringstream buf(input);
+  std::istream_iterator<std::string> beg(buf), end;
+  std::vector<std::string> tokens(beg, end);
+  return tokens;
 }
