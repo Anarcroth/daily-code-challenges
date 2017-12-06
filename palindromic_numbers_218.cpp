@@ -9,19 +9,17 @@ int main()
   std::string pal_number = " ";
   std::cout << "Enter a number: ";
   std::cin >> pal_number;
-  bool ch = false;
-  while (!ch)
-    {
-      std::cout << pal_number;
-      std::string temp = pal_number;
-      std::reverse(pal_number.begin(), pal_number.end());
-      std::string num = std::to_string(std::stoi(temp) + std::stoi(pal_number));
-      std::cout << num;
-      if (check_pal(num))
-        {
-          std::cout << num << std::endl;
-          ch = true;
-        }
+  for (int i = 0; i < 1000; i++)
+  {
+    std::string temp = pal_number;
+    std::reverse(pal_number.begin(), pal_number.end());
+    int num = std::stoi(temp) + std::stoi(pal_number);
+
+    if (check_pal(std::to_string(num)))
+      {
+        std::cout << num << std::endl;
+        std::abort();
+      }
     }
   return 0;
 }
@@ -29,9 +27,9 @@ int main()
 bool check_pal(std::string num)
 {
   size_t n;
-  for (size_t i = 0; i < num.size(); i++)
+  for (size_t i = 0; i < 1000; i++)
     {
-      while (num[i] == num[num.size() - i])
+      if (num[i] == num[1000 - i])
         {
           n += 1;
           if (n == num.size())
