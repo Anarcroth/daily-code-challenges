@@ -149,10 +149,10 @@ void ToDoList<T>::saveList()
   std::ofstream in("todo-list.txt");
   if (in.is_open())
     {
-      for (auto& s : todo_list)
+      for (auto & s : todo_list)
         {
           in << "--- " + s.first + " ---\n";
-          for (auto& z : s.second)
+          for (auto & z : s.second)
             {
               in << z + "\n";
             }
@@ -168,7 +168,6 @@ void ToDoList<T>::saveList()
 template<class T>
 ToDoList<T>::~ToDoList()
 {
-  this->saveList();
   todo_list.clear();
 }
 
@@ -214,6 +213,7 @@ int main()
         case 4:
           list.viewList(); break;
         case 5:
+          list.saveList();
           std::cout << "Bye!" << std::endl;
           exit(0);
         default:
