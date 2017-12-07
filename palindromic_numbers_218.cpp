@@ -37,21 +37,30 @@ bool check_pal(std::string num);
 
 int main()
 {
-  std::string pal_number = " ";
+  long long int n = 0, rev_num = 0, temp = 0;
   std::cout << "Enter a number: ";
-  std::cin >> pal_number;
+  std::cin >> n;
 
   for (int i = 0; i < 1000; i++)
     {
-      std::string temp = pal_number;
-      std::reverse(pal_number.begin(), pal_number.end());
-      int num = std::stoi(temp) + std::stoi(pal_number);
-
-      if (check_pal(std::to_string(num)))
+      temp = n;
+      while (n != 0)
         {
-          std::cout << num;
+          long long int remainder = n%10;
+          rev_num = rev_num * 10 + remainder;
+          n /= 10;
+        }
+
+      long long int sum = temp + rev_num;
+
+      if (check_pal(std::to_string(sum)))
+        {
+          std::cout << sum;
           return 0;
         }
+
+      n = sum;
+      rev_num = 0;
     }
 
    return 0;
@@ -59,18 +68,8 @@ int main()
 
 bool check_pal(std::string num)
 {
-  size_t n = 0 ;
-  for (size_t i = 0; i < 1000; i++)
-    {
-      if (num[i] == num[1000 - i])
-        {
-          n += 1;
-          if (n == num.size())
-            {
-              std::cout << num;
-              return true;
-            }
-        }
-    }
-  return false;
+  std::string first_h = num.substr(0, num.size() / 2);
+  std::string second_h = num.substr(num.size() / 2 + 1);
+  std::reverse(second_h.begin(), second_h.end());
+  return (first_h == second_h) ? true : false;
 }
