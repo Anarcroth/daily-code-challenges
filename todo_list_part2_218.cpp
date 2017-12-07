@@ -59,7 +59,6 @@
 #include <utility>
 #include <iterator>
 #include <sstream>
-#include <initializer_list>
 
 template<class T>
 class ToDoList
@@ -72,7 +71,7 @@ public:
   ToDoList(std::vector<T> list);
   ~ToDoList();
 
-  void addItem(T item, std::vector<T> categories);
+  void addItem(T item, std::vector<T>& categories);
   void updateItem(T old_item, T new_item);
   void deleteItem(T item);
   void saveList();
@@ -90,7 +89,7 @@ ToDoList<T>::ToDoList(std::vector<T> list) : todo_list(list)
 }
 
 template<class T>
-void ToDoList<T>::addItem(T item, std::vector<T> categories)
+void ToDoList<T>::addItem(T item, std::vector<T>& categories)
 {
   for (auto & s : categories)
     {
@@ -179,9 +178,7 @@ int main()
 {
   ToDoList<std::string> list;
 
-  int answr;
-
-  std::string input1 = "", input2 = "";
+  std::string input1 = "", input2 = "", answr;
 
   std::cout << "Welcome to your ToDo List" << std::endl;
   std::cout << "1. Add an item and category." << std::endl;
@@ -193,14 +190,14 @@ int main()
   do
     {
       std::cout << "Enter action: ";
-      std::cin >> answr;
+      std::getline(std::cin, answr);
 
-      switch (answr)
+      switch (std::stoi(answr))
         {
         case 1:
           {
             std::cout << "Enter an item: ";
-            std::cin >> input1;
+            std::getline(std::cin, input1);
             std::vector<std::string> categories = get_categories();
             list.addItem(input1, categories); break;
           }
@@ -222,19 +219,19 @@ int main()
         default:
           continue;
         }
-    } while (answr);
+    } while (std::stoi(answr));
 
   return 0;
 }
 
 std::vector<std::string> get_categories()
 {
-  std::string input = "";
   std::cout << "Enter category(ies), separated by a space: ";
-  std::cin >> input;
+  std::string input;
   std::getline(std::cin, input);
   std::istringstream buf(input);
   std::istream_iterator<std::string> beg(buf), end;
   std::vector<std::string> tokens(beg, end);
+
   return tokens;
 }
