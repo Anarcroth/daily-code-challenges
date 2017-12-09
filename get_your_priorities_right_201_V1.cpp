@@ -16,15 +16,18 @@ public:
   T dequeueFirst();
   T dequeueA();
   T dequeueB();
-  int count() const;
+  int count();
   void viewQueue() const;
   void clear();
+  void set_queue(std::map< T, std::pair<double, double> >& queue);
+  std::map< T, std::pair<double, double> > get_queue();
+
 private:
   std::map< T, std::pair<double, double> > p_queue;
 };
 
 template<typename T>
-PriorityQueue<T>::PriorityQueue()
+PriorityQueue<T>::PriorityQueue() : p_queue()
 { }
 
 template<typename T>
@@ -90,7 +93,7 @@ T PriorityQueue<T>::dequeueFirst()
 }
 
 template<typename T>
-int PriorityQueue<T>::count() const
+int PriorityQueue<T>::count()
 {
   return p_queue.size();
 }
@@ -102,6 +105,18 @@ void PriorityQueue<T>::viewQueue() const
     {
       std::cout << s.first << " " << s.second.first << " " << s.second.second << std::endl;
     }
+}
+
+template<typename T>
+void PriorityQueue<T>::set_queue(std::map<T, std::pair<double, double> > & queue)
+{
+  this->p_queue = queue;
+}
+
+template<typename T>
+std::map< T, std::pair<double, double> > PriorityQueue<T>::get_queue()
+{
+  return this->p_queue;
 }
 
 template<typename T>
