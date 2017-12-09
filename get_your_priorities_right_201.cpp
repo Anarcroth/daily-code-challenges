@@ -10,12 +10,12 @@ class PriorityQueue
 {
 public:
   PriorityQueue();
-  PriorityQueue(std::map< T, std::pair<double, double> >& queue);
+  PriorityQueue(std::map< T, std::pair<double, double> > queue);
   ~PriorityQueue();
-  void enqueue(T& item, double a, double b);
+  void enqueue(T item, double a, double b);
   T& dequeueFirst();
-  T& dequeueA();
-  T& dequeueB();
+  T dequeueA();
+  T dequeueB();
   int count() const;
   void clear();
 private:
@@ -27,46 +27,55 @@ PriorityQueue<T>::PriorityQueue()
 { }
 
 template<typename T>
-PriorityQueue<T>::PriorityQueue(std::map< T, std::pair<double, double> >& queue)
+PriorityQueue<T>::PriorityQueue(std::map< T, std::pair<double, double> > queue)
 {
   p_queue = queue;
 }
 
 template<typename T>
-void PriorityQueue<T>::enqueue(T& item, double a, double b)
+void PriorityQueue<T>::enqueue(T item, double a, double b)
 {
-  p_queue.insert(std::pair<T, std::pair<double, double> >(item, (a, b)));
+  p_queue.insert(std::make_pair(item, std::make_pair(a, b)));
   //p_queue[item].push_back(a);
   //p_queue[item].push_back(b);
 }
 
 template<typename T>
-T& PriorityQueue<T>::dequeueA()
+T PriorityQueue<T>::dequeueA()
 {
+  if (p_queue.empty())
+    {
+      return "The priority queue is empty";
+    }
   int max = 0;
   std::string temp;
   for (auto & s : p_queue)
     {
-      if (s->second->first > max)
+      if (s.second.first > max)
         {
-          max = s->second->first;
-          temp = s->first;
+          max = s.second.first;
+          temp = s.first;
         }
     }
+
   return p_queue.find(temp)->first;
 }
 
 template<typename T>
-T& PriorityQueue<T>::dequeueB()
+T PriorityQueue<T>::dequeueB()
 {
+  if (p_queue.empty())
+    {
+      return "The priority queue is empty";
+    }
   int max = 0;
   std::string temp;
   for (auto & s : p_queue)
     {
-      if (s->second->second > max)
+      if (s.second.second > max)
         {
-          max = s->second->second;
-          temp = s->first;
+          max = s.second.second;
+          temp = s.first;
         }
     }
   return p_queue.find(temp)->first;
@@ -92,5 +101,16 @@ PriorityQueue<T>::~PriorityQueue()
 
 int main()
 {
+  PriorityQueue<std::string> qu;
+
+  qu.enqueue("needle", 1.8, 20.2);
+  qu.enqueue("scalpel", 3.2, 30.9);
+  qu.enqueue("bandage", 0.9, 6.2);
+  qu.enqueue("cheap needle", 0.2, 10.1);
+  qu.enqueue("gloves", 5.5, 25.4);
+  std::cout << qu.dequeueA() << std::endl;
+  std::cout << qu.dequeueB() << std::endl;
+  qu.clear();
+  std::cout << qu.dequeueB() << std::endl;
   return 0;
 }
