@@ -10,13 +10,14 @@ class PriorityQueue
 {
 public:
   PriorityQueue();
-  PriorityQueue(std::map< T, std::pair<double, double> > queue);
+  PriorityQueue(std::map< T, std::pair<double, double> >& queue);
   ~PriorityQueue();
   void enqueue(T item, double a, double b);
   T dequeueFirst();
   T dequeueA();
   T dequeueB();
   int count() const;
+  void viewQueue() const;
   void clear();
 private:
   std::map< T, std::pair<double, double> > p_queue;
@@ -27,7 +28,7 @@ PriorityQueue<T>::PriorityQueue()
 { }
 
 template<typename T>
-PriorityQueue<T>::PriorityQueue(std::map< T, std::pair<double, double> > queue)
+PriorityQueue<T>::PriorityQueue(std::map< T, std::pair<double, double> >& queue)
 {
   p_queue = queue;
 }
@@ -55,8 +56,8 @@ T PriorityQueue<T>::dequeueA()
           temp = s.first;
         }
     }
-
-  return p_queue.find(temp)->first;
+  p_queue.erase(p_queue.find(temp));
+  return temp;
 }
 
 template<typename T>
@@ -76,19 +77,31 @@ T PriorityQueue<T>::dequeueB()
           temp = s.first;
         }
     }
-  return p_queue.find(temp)->first;
+  p_queue.erase(p_queue.find(temp));
+  return temp;
 }
 
 template<typename T>
 T PriorityQueue<T>::dequeueFirst()
 {
-  return p_queue.begin()->first;
+  std::string temp = p_queue.begin()->first;
+  p_queue.erase(p_queue.find(temp));
+  return temp;
 }
 
 template<typename T>
 int PriorityQueue<T>::count() const
 {
   return p_queue.size();
+}
+
+template<typename T>
+void PriorityQueue<T>::viewQueue() const
+{
+  for (auto & s : p_queue)
+    {
+      std::cout << s.first << " " << s.second.first << " " << s.second.second << std::endl;
+    }
 }
 
 template<typename T>
@@ -112,10 +125,12 @@ int main()
   qu.enqueue("bandage", 0.9, 6.2);
   qu.enqueue("cheap needle", 0.2, 10.1);
   qu.enqueue("gloves", 5.5, 25.4);
+  qu.viewQueue();
   std::cout << qu.dequeueA() << std::endl;
   std::cout << qu.dequeueB() << std::endl;
   std::cout << qu.count() << std::endl;
   std::cout << qu.dequeueFirst() << std::endl;
+  qu.viewQueue();
   qu.clear();
   std::cout << qu.dequeueB() << std::endl;
   return 0;
