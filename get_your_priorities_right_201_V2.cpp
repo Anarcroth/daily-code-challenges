@@ -28,7 +28,11 @@ public:
   int count() const;
   void viewQueue() const;
   void clear();
+  void set_queue(node<T>& root);
+  node<T>* get_queue();
+
 private:
+  void enqueue(node<T>* root, T item, double a, double b);
   node<T> *root;
 };
 
@@ -45,6 +49,35 @@ PriorityQueue<T>::PriorityQueue(node<T>& root)
 template<typename T>
 void PriorityQueue<T>::enqueue(T item, double a, double b)
 {
+  if (root == nullptr)
+    {
+      root = new node<T>;
+      root->item = item;
+      root->priorityA = a;
+      root->priorityB = b;
+      root->next = nullptr;
+    }
+  else
+    {
+      enqueue(root->next, item, a, b);
+    }
+}
+
+template<typename T>
+void PriorityQueue<T>::enqueue(node<T>* root, T item, double a, double b)
+{
+  if (root == nullptr)
+    {
+      root = new node<T>;
+      root->item = item;
+      root->priorityA = a;
+      root->priorityB = b;
+      root->next = nullptr;
+    }
+  else
+    {
+      enqueue(root->next, item, a, b);
+    }
 }
 
 template<typename T>
@@ -77,6 +110,18 @@ void PriorityQueue<T>::viewQueue() const
 }
 
 template<typename T>
+void PriorityQueue<T>::set_queue(node<T>& root)
+{
+  this->root = root;
+}
+
+template<typename T>
+node<T>* PriorityQueue<T>::get_queue()
+{
+  return this->root;
+}
+
+template<typename T>
 void PriorityQueue<T>::clear()
 {
 }
@@ -88,6 +133,6 @@ PriorityQueue<T>::~PriorityQueue()
 
 int main()
 {
-  
+
   return 0;
 }
