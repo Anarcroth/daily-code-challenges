@@ -32,12 +32,14 @@ public:
   node<T>* get_queue();
 
 private:
-  void enqueue(node<T>* root, T item, double a, double b);
-  node<T> *root;
+  void delete_node_at(double val);
+
+  node<T>* front;
+  node<T>* end;
 };
 
 template<typename T>
-PriorityQueue<T>::PriorityQueue() : root(nullptr)
+PriorityQueue<T>::PriorityQueue() : front(nullptr), end(nullptr)
 { }
 
 template<typename T>
@@ -49,41 +51,50 @@ PriorityQueue<T>::PriorityQueue(node<T>& root)
 template<typename T>
 void PriorityQueue<T>::enqueue(T item, double a, double b)
 {
-  if (root == nullptr)
-    {
-      root = new node<T>;
-      root->item = item;
-      root->priorityA = a;
-      root->priorityB = b;
-      root->next = nullptr;
-    }
-  else
-    {
-      enqueue(root->next, item, a, b);
-    }
-}
+  node<T> *temp = new node<T>;
 
-template<typename T>
-void PriorityQueue<T>::enqueue(node<T>* root, T item, double a, double b)
-{
-  if (root == nullptr)
+  temp->item = item;
+  temp->priorityA = a;
+  temp->priorityB = b;
+  temp->next = nullptr;
+
+  if (front == nullptr)
     {
-      root = new node<T>;
-      root->item = item;
-      root->priorityA = a;
-      root->priorityB = b;
-      root->next = nullptr;
+      front = temp;
     }
   else
     {
-      enqueue(root->next, item, a, b);
+      end->next = temp;
     }
+
+  end = temp;
 }
 
 template<typename T>
 T PriorityQueue<T>::dequeueA()
 {
-  return "";
+  node<T>* temp;
+
+  if (front == nullptr)
+    {
+      std::cout << "The priority queue is empty." << std::endl;
+    }
+  else
+    {
+      double maxA = 0;
+      std::string strA;
+      temp = front;
+      while (temp->next != nullptr)
+        {
+          if (temp->priorityA > maxA)
+            {
+              maxA = temp->priorityA;
+              strA = temp->item;
+            }
+        }
+      //TODO delete_node_at(maxA);
+      return strA;
+    }
 }
 
 template<typename T>
