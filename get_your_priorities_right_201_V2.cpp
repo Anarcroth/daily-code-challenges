@@ -110,6 +110,19 @@ T PriorityQueue<T>::dequeueFirst()
 }
 
 template<typename T>
+void PriorityQueue<T>::delete_node_at(double val)
+{
+  node<T>* temp = front;
+  while (temp->next != nullptr)
+    {
+      if (temp->priorityA == val || temp->priorityB == val)
+        {
+          //TODO set prev node to the next one and delete the current one
+        }
+    }
+}
+
+template<typename T>
 int PriorityQueue<T>::count() const
 {
   return 0;
