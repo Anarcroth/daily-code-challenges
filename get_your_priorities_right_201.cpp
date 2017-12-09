@@ -13,7 +13,7 @@ public:
   PriorityQueue(std::map< T, std::pair<double, double> > queue);
   ~PriorityQueue();
   void enqueue(T item, double a, double b);
-  T& dequeueFirst();
+  T dequeueFirst();
   T dequeueA();
   T dequeueB();
   int count() const;
@@ -36,8 +36,6 @@ template<typename T>
 void PriorityQueue<T>::enqueue(T item, double a, double b)
 {
   p_queue.insert(std::make_pair(item, std::make_pair(a, b)));
-  //p_queue[item].push_back(a);
-  //p_queue[item].push_back(b);
 }
 
 template<typename T>
@@ -82,6 +80,12 @@ T PriorityQueue<T>::dequeueB()
 }
 
 template<typename T>
+T PriorityQueue<T>::dequeueFirst()
+{
+  return p_queue.begin()->first;
+}
+
+template<typename T>
 int PriorityQueue<T>::count() const
 {
   return p_queue.size();
@@ -110,6 +114,8 @@ int main()
   qu.enqueue("gloves", 5.5, 25.4);
   std::cout << qu.dequeueA() << std::endl;
   std::cout << qu.dequeueB() << std::endl;
+  std::cout << qu.count() << std::endl;
+  std::cout << qu.dequeueFirst() << std::endl;
   qu.clear();
   std::cout << qu.dequeueB() << std::endl;
   return 0;
