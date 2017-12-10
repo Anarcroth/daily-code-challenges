@@ -5,13 +5,13 @@
 #include <algorithm>
 #include <utility>
 
-template<typename N>
+template<typename T>
 struct node
 {
-  N itme;
+  T item;
   double priorityA;
   double priorityB;
-  node *next;
+  node<T> *next;
 };
 
 template<typename T>
@@ -32,7 +32,7 @@ public:
   node<T>* get_queue();
 
 private:
-  void delete_node_at(double val);
+  void delete_node_at(node<T>* nd);
 
   node<T> *front;
   node<T> *end;
@@ -73,7 +73,7 @@ void PriorityQueue<T>::enqueue(T item, double a, double b)
 template<typename T>
 T PriorityQueue<T>::dequeueA()
 {
-  node<T> *temp;
+  node<T> *temp, *hit;
 
   if (front == nullptr)
     {
@@ -90,9 +90,10 @@ T PriorityQueue<T>::dequeueA()
             {
               maxA = temp->priorityA;
               strA = temp->item;
+              hit = temp;
             }
         }
-      delete_node_at(maxA);
+      delete_node_at(hit);
       return strA;
     }
 }
@@ -100,7 +101,29 @@ T PriorityQueue<T>::dequeueA()
 template<typename T>
 T PriorityQueue<T>::dequeueB()
 {
-  return "";
+  node<T> *temp, *hit;
+
+  if (front == nullptr)
+    {
+      std::cout << "The priority queue is empty." << std::endl;
+    }
+  else
+    {
+      double maxA = 0;
+      std::string strA;
+      temp = front;
+      while (temp->next != nullptr)
+        {
+          if (temp->priorityA > maxA)
+            {
+              maxA = temp->priorityA;
+              strA = temp->item;
+              hit = temp;
+            }
+        }
+      delete_node_at(hit);
+      return strA;
+    }
 }
 
 template<typename T>
@@ -121,14 +144,15 @@ T PriorityQueue<T>::dequeueFirst()
 }
 
 template<typename T>
-void PriorityQueue<T>::delete_node_at(double val)
+void PriorityQueue<T>::delete_node_at(node<T>* nd)
 {
   node<T> *temp = front;
   while (temp->next != nullptr)
     {
-      if (temp->priorityA == val || temp->priorityB == val)
+      if (temp->next == nd)
         {
-          //TODO set prev node to the next one and delete the current one
+          temp = nd->next;
+          delete nd;
         }
     }
 }
@@ -168,6 +192,13 @@ PriorityQueue<T>::~PriorityQueue()
 
 int main()
 {
+  PriorityQueue<std::string> qu;
+
+  qu.enqueue("needle", 5.5, 7.3);
+  qu.enqueue("gloves", 1.8, 1.9);
+  qu.enqueue("cotton balls", 1.7, 2.6);
+
+  // std::cout << qu.dequeueA() << std::endl;
 
   return 0;
 }
