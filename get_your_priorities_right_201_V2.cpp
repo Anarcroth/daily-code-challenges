@@ -29,17 +29,19 @@ public:
   void viewQueue() const;
   void clear();
   void set_queue(const node<T>& root);
-  node<T>* get_queue();
+  node<T>* get_queue() const;
 
 private:
   void delete_node_at(node<T>*& nd);
 
   node<T> *front;
   node<T> *end;
+
+  int size;
 };
 
 template<typename T>
-PriorityQueue<T>::PriorityQueue() : front(nullptr), end(nullptr)
+PriorityQueue<T>::PriorityQueue() : front(nullptr), end(nullptr), size(0)
 { }
 
 template<typename T>
@@ -66,8 +68,8 @@ void PriorityQueue<T>::enqueue(T item, double a, double b)
     {
       end->next = temp;
     }
-
   end = temp;
+  size += 1;
 }
 
 template<typename T>
@@ -141,6 +143,7 @@ T PriorityQueue<T>::dequeueFirst()
       std::string key = temp->item;
       front = front->next;
       delete temp;
+      size -= 1;
       return key;
     }
 }
@@ -155,6 +158,7 @@ void PriorityQueue<T>::delete_node_at(node<T>*& nd)
         {
           temp->next = nd->next;
           delete *&nd;
+          size -= 1;
           break;
         }
       temp = temp->next;
@@ -164,7 +168,7 @@ void PriorityQueue<T>::delete_node_at(node<T>*& nd)
 template<typename T>
 int PriorityQueue<T>::count() const
 {
-  return 0;
+  return size;
 }
 
 template<typename T>
@@ -193,7 +197,7 @@ void PriorityQueue<T>::set_queue(const node<T>& root)
 }
 
 template<typename T>
-node<T>* PriorityQueue<T>::get_queue()
+node<T>* PriorityQueue<T>::get_queue() const
 {
   return this->root;
 }
@@ -235,6 +239,7 @@ int main()
 
   qu.viewQueue();
 
+  std::cout << qu.count() << std::endl;
   std::cout << qu.dequeueA() << std::endl;
 
   qu.viewQueue();
@@ -242,6 +247,7 @@ int main()
   std::cout << qu.dequeueFirst() << std::endl;
 
   qu.viewQueue();
+  std::cout << qu.count() << std::endl;
 
   return 0;
 }
