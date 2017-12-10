@@ -32,7 +32,7 @@ public:
   node<T>* get_queue();
 
 private:
-  void delete_node_at(node<T>* nd);
+  void delete_node_at(node<T>*& nd);
 
   node<T> *front;
   node<T> *end;
@@ -68,23 +68,25 @@ void PriorityQueue<T>::enqueue(T item, double a, double b)
     }
 
   end = temp;
+
+  std::cout << end->item << " " << end->priorityA << std::endl;
 }
 
 template<typename T>
 T PriorityQueue<T>::dequeueA()
 {
-  node<T> *temp, *hit;
-
   if (front == nullptr)
     {
       std::cout << "The priority queue is empty." << std::endl;
     }
   else
     {
+      node<T> *temp = front, *hit;
+
       double maxA = 0;
-      std::string strA;
-      temp = front;
-      while (temp->next != nullptr)
+      std::string strA = "";
+
+      while (temp != nullptr)
         {
           if (temp->priorityA > maxA)
             {
@@ -92,8 +94,9 @@ T PriorityQueue<T>::dequeueA()
               strA = temp->item;
               hit = temp;
             }
+          temp = temp->next;
         }
-      delete_node_at(hit);
+      delete_node_at(*&hit);
       return strA;
     }
 }
@@ -109,20 +112,20 @@ T PriorityQueue<T>::dequeueB()
     }
   else
     {
-      double maxA = 0;
-      std::string strA;
+      double maxB = 0;
+      std::string strB = "";
       temp = front;
       while (temp->next != nullptr)
         {
-          if (temp->priorityA > maxA)
+          if (temp->priorityB > maxB)
             {
-              maxA = temp->priorityA;
-              strA = temp->item;
+              maxB = temp->priorityB;
+              strB = temp->item;
               hit = temp;
             }
         }
       delete_node_at(hit);
-      return strA;
+      return strB;
     }
 }
 
@@ -144,16 +147,18 @@ T PriorityQueue<T>::dequeueFirst()
 }
 
 template<typename T>
-void PriorityQueue<T>::delete_node_at(node<T>* nd)
+void PriorityQueue<T>::delete_node_at(node<T>*& nd)
 {
   node<T> *temp = front;
-  while (temp->next != nullptr)
+  while (temp != nullptr)
     {
-      if (temp->next == nd)
+      if (temp->next->item == nd->item)
         {
           temp = nd->next;
           delete nd;
+          break;
         }
+      temp = temp->next;
     }
 }
 
@@ -196,9 +201,9 @@ int main()
 
   qu.enqueue("needle", 5.5, 7.3);
   qu.enqueue("gloves", 1.8, 1.9);
-  qu.enqueue("cotton balls", 1.7, 2.6);
+  qu.enqueue("cotton balls", 10.7, 2.6);
 
-  // std::cout << qu.dequeueA() << std::endl;
+  std::cout << qu.dequeueA() << std::endl;
 
   return 0;
 }
