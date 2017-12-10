@@ -28,14 +28,14 @@ public:
   int count() const;
   void viewQueue() const;
   void clear();
-  void set_queue(node<T>& root);
+  void set_queue(const node<T>& root);
   node<T>* get_queue();
 
 private:
   void delete_node_at(double val);
 
-  node<T>* front;
-  node<T>* end;
+  node<T> *front;
+  node<T> *end;
 };
 
 template<typename T>
@@ -73,7 +73,7 @@ void PriorityQueue<T>::enqueue(T item, double a, double b)
 template<typename T>
 T PriorityQueue<T>::dequeueA()
 {
-  node<T>* temp;
+  node<T> *temp;
 
   if (front == nullptr)
     {
@@ -92,7 +92,7 @@ T PriorityQueue<T>::dequeueA()
               strA = temp->item;
             }
         }
-      //TODO delete_node_at(maxA);
+      delete_node_at(maxA);
       return strA;
     }
 }
@@ -106,13 +106,24 @@ T PriorityQueue<T>::dequeueB()
 template<typename T>
 T PriorityQueue<T>::dequeueFirst()
 {
-  return "";
+  if (front == nullptr)
+    {
+      std::cout << "The priority queue is empty." << std::endl;
+    }
+  else
+    {
+      node<T> *temp = front;
+      std::string key = temp->item;
+      front = front->next;
+      delete temp;
+      return key;
+    }
 }
 
 template<typename T>
 void PriorityQueue<T>::delete_node_at(double val)
 {
-  node<T>* temp = front;
+  node<T> *temp = front;
   while (temp->next != nullptr)
     {
       if (temp->priorityA == val || temp->priorityB == val)
@@ -134,7 +145,7 @@ void PriorityQueue<T>::viewQueue() const
 }
 
 template<typename T>
-void PriorityQueue<T>::set_queue(node<T>& root)
+void PriorityQueue<T>::set_queue(const node<T>& root)
 {
   this->root = root;
 }
