@@ -68,8 +68,6 @@ void PriorityQueue<T>::enqueue(T item, double a, double b)
     }
 
   end = temp;
-
-  std::cout << end->item << " " << end->priorityA << std::endl;
 }
 
 template<typename T>
@@ -154,8 +152,8 @@ void PriorityQueue<T>::delete_node_at(node<T>*& nd)
     {
       if (temp->next->item == nd->item)
         {
-          temp = nd->next;
-          delete nd;
+          temp->next = nd->next;
+          delete *&nd;
           break;
         }
       temp = temp->next;
@@ -171,6 +169,20 @@ int PriorityQueue<T>::count() const
 template<typename T>
 void PriorityQueue<T>::viewQueue() const
 {
+  if (front == nullptr)
+    {
+      std::cout << "The priority queue is empty" << std::endl;
+    }
+  else
+    {
+      node<T> *temp = front;
+
+      while (temp != nullptr)
+        {
+          std::cout << temp->item << " " << temp->priorityA << " "<< temp->priorityB << std::endl;
+          temp = temp->next;
+        }
+    }
 }
 
 template<typename T>
@@ -203,7 +215,11 @@ int main()
   qu.enqueue("gloves", 1.8, 1.9);
   qu.enqueue("cotton balls", 10.7, 2.6);
 
+  qu.viewQueue();
+
   std::cout << qu.dequeueA() << std::endl;
+
+  qu.viewQueue();
 
   return 0;
 }
