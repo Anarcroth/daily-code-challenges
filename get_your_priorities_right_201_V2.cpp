@@ -121,8 +121,9 @@ T PriorityQueue<T>::dequeueB()
               strB = temp->item;
               hit = temp;
             }
+          temp = temp->next;
         }
-      delete_node_at(hit);
+      delete_node_at(*&hit);
       return strB;
     }
 }
@@ -200,11 +201,28 @@ node<T>* PriorityQueue<T>::get_queue()
 template<typename T>
 void PriorityQueue<T>::clear()
 {
+  if (front == nullptr)
+    {
+      std::cout << "The priority queue is already cleared" << std::endl;
+    }
+  else
+    {
+      node<T> *temp;
+
+      while (front != nullptr)
+        {
+          temp = front;
+          front = front->next;
+          delete temp;
+        }
+      delete front;
+    }
 }
 
 template<typename T>
 PriorityQueue<T>::~PriorityQueue()
 {
+  clear();
 }
 
 int main()
@@ -212,12 +230,16 @@ int main()
   PriorityQueue<std::string> qu;
 
   qu.enqueue("needle", 5.5, 7.3);
-  qu.enqueue("gloves", 1.8, 1.9);
+  qu.enqueue("gloves", 11.8, 1.9);
   qu.enqueue("cotton balls", 10.7, 2.6);
 
   qu.viewQueue();
 
   std::cout << qu.dequeueA() << std::endl;
+
+  qu.viewQueue();
+
+  std::cout << qu.dequeueFirst() << std::endl;
 
   qu.viewQueue();
 
