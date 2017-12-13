@@ -2,4 +2,4 @@
 CMakeLists.txt
 build/
 example.txt
-
+.dir-locals.el
