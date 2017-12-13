@@ -68,33 +68,33 @@
 
 int main()
 {
-  std::string input;
-  std::getline(std::cin, input);
+    std::string input;
+    std::getline(std::cin, input);
 
-  std::istringstream stream(input);
-  std::istream_iterator<std::string> beg(stream), end;
-  std::vector<std::string> tokens(beg, end);
+    std::istringstream stream(input);
+    std::istream_iterator<std::string> beg(stream), end;
+    std::vector<std::string> tokens(beg, end);
 
-  std::vector<int> numerators, denominator;
+    std::vector<int> numerators, denominator;
 
-  for (std::string s : tokens)
+    for (std::string s : tokens)
     {
-      if (s != "+")
+        if (s != "+")
         {
-          numerators.push_back(std::stoi(s.substr(0, s.find("/"))));
-          denominator.push_back(std::stoi(s.substr(s.find("/") + 1, s.size())));
+            numerators.push_back(std::stoi(s.substr(0, s.find("/"))));
+            denominator.push_back(std::stoi(s.substr(s.find("/") + 1, s.size())));
         }
     }
 
-  long int prod = 1;
-  std::for_each(denominator.begin(), denominator.end(), [&](long int n) { prod *= n; });
-  for (int n = 0; n < numerators.size(); n++)
+    long int prod = 1;
+    std::for_each(denominator.begin(), denominator.end(), [&](long int n) { prod *= n; });
+    for (int n = 0; n < numerators.size(); n++)
     {
-      numerators[n] *= prod / denominator[n];
+        numerators[n] *= prod / denominator[n];
     }
-  long int sum = 0;
-  std::for_each(numerators.begin(), numerators.end(), [&](long int n) { sum += n; });
-  std::cout << sum / std::__gcd(sum, prod) << "/" <<  prod / std::__gcd(sum, prod);
+    long int sum = 0;
+    std::for_each(numerators.begin(), numerators.end(), [&](long int n) { sum += n; });
+    std::cout << sum / std::__gcd(sum, prod) << "/" <<  prod / std::__gcd(sum, prod);
 
-  return 0;
+    return 0;
 }
