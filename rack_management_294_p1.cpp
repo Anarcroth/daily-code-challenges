@@ -49,6 +49,14 @@ int main()
     std::string board;
     std::getline(std::cin, board);
     std::string word;
+    short int wildcards = 0;
+    for (auto &c : board)
+    {
+         if (c == '?')
+         {
+              wildcards += 1;
+         }
+    }
     for (auto &c : input)
     {
          try
@@ -61,7 +69,7 @@ int main()
          }
     }
 
-    (word == input) ? std::cout << "true" : std::cout << "false";
+    ((wildcards == input.length() - word.length()) || (word == input)) ? std::cout << "true" : std::cout << "true";
 
     return 0;
 }
