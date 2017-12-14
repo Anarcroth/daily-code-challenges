@@ -41,35 +41,42 @@
 #include <iostream>
 #include <string>
 #include <algorithm>
+#include <fstream>
 
 int main()
 {
-    std::string input;
-    std::getline(std::cin, input);
-    std::string board;
-    std::getline(std::cin, board);
-    std::string word;
-    short int wildcards = 0;
-    for (auto &c : board)
-    {
-         if (c == '?')
-         {
-              wildcards += 1;
-         }
-    }
-    for (auto &c : input)
-    {
-         try
-         {
-              word.append(1, board.at(board.find(c)));
-              board.erase(std::find(board.begin(), board.end(), c));
-         }
-         catch (std::exception e)
-         {
-         }
-    }
+     std::string board;
+     std::getline(std::cin, board);
+     std::string output;
+     short int wildcards = 0;
 
-    ((wildcards == input.length() - word.length()) || (word == input)) ? std::cout << "true" : std::cout << "true";
+     std::for_each(board.begin(), board.end(), [&](char&c){ (c == '?') ? wildcards += 1 : wildcards += 0; });
 
-    return 0;
+     std::ifstream file("words1.txt");
+     std::string word;
+     while (file >> word)
+     {
+          std::string temp_board = board;
+          for (auto &c : word)
+          {
+               try
+               {
+                    output.append(1, temp_board.at(temp_board.find(c)));
+                    temp_board.erase(std::find(temp_board.begin(), temp_board.end(), c));
+               }
+               catch (std::exception e)
+               {
+               }
+          }
+          if ((wildcards == word.length() - output.length()) || (output == word))
+          {
+               std::cout << word << " = " << output << " -- true"; return 0;
+          }
+          else
+          {
+               output = "";
+          }
+     }
+
+     return 0;
 }
