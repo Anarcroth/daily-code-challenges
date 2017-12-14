@@ -3,3 +3,4 @@ CMakeLists.txt
 build/
 example.txt
 .dir-locals.el
+enable1.txt
