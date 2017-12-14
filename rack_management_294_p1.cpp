@@ -43,17 +43,63 @@
 #include <algorithm>
 #include <fstream>
 
+int calc_score(std::string word)
+{
+     int temp_score = 0;
+     for (auto &c : word)
+     {
+          switch(c)
+          {
+          case 'a':
+          case 'e':
+          case 'i':
+          case 'o':
+          case 'n':
+          case 'r':
+          case 't':
+          case 'l':
+          case 's':
+          case 'u':
+               temp_score += 1; break;
+          case 'd':
+          case 'g':
+               temp_score += 2; break;
+          case 'b':
+          case 'c':
+          case 'm':
+          case 'p':
+               temp_score += 3; break;
+          case 'f':
+          case 'h':
+          case 'v':
+          case 'w':
+          case 'y':
+               temp_score += 4; break;
+          case 'k':
+               temp_score += 5; break;
+          case 'j':
+          case 'x':
+               temp_score += 8; break;
+          case 'q':
+          case 'z':
+               temp_score += 10; break;
+          }
+     }
+     return temp_score;
+}
+
 int main()
 {
      std::string board;
      std::getline(std::cin, board);
      std::string output;
      short int wildcards = 0;
+     int score = 0, max_score = 0;
 
      std::for_each(board.begin(), board.end(), [&](char&c){ (c == '?') ? wildcards += 1 : wildcards += 0; });
 
      std::ifstream file("words1.txt");
-     std::string word;
+     std::string word, max_score_word;
      while (file >> word)
      {
           std::string temp_board = board;
@@ -70,13 +116,20 @@ int main()
           }
           if ((wildcards == word.length() - output.length()) || (output == word))
           {
-               std::cout << word << " = " << output << " -- true"; return 0;
+               score = calc_score(word);
+               if (score > max_score)
+               {
+                    max_score_word = word;
+                    max_score = score;
+               }
           }
           else
           {
                output = "";
           }
      }
+
+     std::cout << max_score_word << " -- " << max_score << std::endl;
 
      return 0;
 }
