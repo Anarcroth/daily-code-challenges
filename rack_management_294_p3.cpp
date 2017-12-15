@@ -86,7 +86,7 @@ int calc_score(std::string word)
 
 void pick_tiles(std::string &line, std::string &board)
 {
-     while (board.size() < 11 && line.size() > 0)
+     while (board.size() < 11)
      {
           char c;
 
@@ -97,26 +97,13 @@ void pick_tiles(std::string &line, std::string &board)
      }
 }
 
-void play_for_word(std::string &line, std::string &board)
+void play_for_word(std::ifstream &file, std::string &board)
 {
-     
-}
-
-int main()
-{
-     std::string line = "sd?zeioao?mluvepesceinfxt?wyiru?ie?giator?t??nuefje?l?odndrotpewlgoobiinysagacaqski?aeh?rbhaervtnl?m";
-     std::string board, output, word, max_score_word;
-     short int wildcards = 0;
-     int score = 0, max_score = 0;
-     std::ifstream file("words1.txt");
-
+     std::string word, output, max_score_word;
+     short int wildcards = 0, max_score = 0, score = 0;
      while (file >> word)
      {
-          pick_tiles(line, board);
-
-          std::for_each(board.begin(), board.end(), [&](char&c){ (c == '?') ? wildcards += 1 : wildcards += 0; });
-
-
+          std::for_each(board.begin(), board.end(), [&](char &c){ (c == '?') ? wildcards += 1 : wildcards += 0; });
           std::string temp_board = board;
           for (auto &c : word)
           {
@@ -143,8 +130,24 @@ int main()
                output = "";
           }
      }
+     //TODO for every  word in the max score word, remove it from the board plus the wildcards and return the score and plays
+}
 
-     std::cout << max_score_word << " -- " << max_score << std::endl;
+int main()
+{
+     std::string line = "sd?zeioao?mluvepesceinfxt?wyiru?ie?giator?t??nuefje?l?odndrotpewlgoobiinysagacaqski?aeh?rbhaervtnl?m";
+     std::string board, output, word, max_score_word;
+     int score = 0, plays = 0;
+     std::ifstream file("words1.txt");
+
+     while (line.size() > 0)
+     {
+          pick_tiles(line, board);
+          play_for_word(file, board);
+
+     }
+
+     std::cout << score << " -- " << plays;
 
      return 0;
 }
