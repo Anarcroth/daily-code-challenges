@@ -36,6 +36,7 @@
 #include <string>
 #include <algorithm>
 #include <fstream>
+#include <vector>
 
 int calc_score(std::string word)
 {
@@ -86,19 +87,21 @@ int calc_score(std::string word)
 
 void pick_tiles(std::string &line, std::string &board)
 {
+     char c = ' ';
+
      while (board.size() < 11)
      {
-          char c;
-
           (std::rand() % 2 != 0) ? c = *line.begin() : c = *line.end();
 
-          board.append(1, c);
+          board.append(1, *&c);
           line.erase(std::find(line.begin(), line.end(), c));
      }
+     std::cout << board.size();
 }
 
-void play_for_word(std::ifstream &file, std::string &board)
+void play_for_word(std::string &board, std::vector<std::string> &found_words, int &gen_score)
 {
+     std::ifstream file("words1.txt");
      std::string word, output, max_score_word;
      short int wildcards = 0, max_score = 0, score = 0;
      while (file >> word)
@@ -130,24 +133,30 @@ void play_for_word(std::ifstream &file, std::string &board)
                output = "";
           }
      }
-     //TODO for every  word in the max score word, remove it from the board plus the wildcards and return the score and plays
+
+     for (auto &c : max_score_word)
+     {
+          board.erase(std::find(board.begin(), board.end(), c));
+     }
+
+     found_words.push_back(max_score_word);
+     gen_score += max_score;
 }
 
 int main()
 {
      std::string line = "sd?zeioao?mluvepesceinfxt?wyiru?ie?giator?t??nuefje?l?odndrotpewlgoobiinysagacaqski?aeh?rbhaervtnl?m";
      std::string board, output, word, max_score_word;
+     std::vector<std::string> found_words;
      int score = 0, plays = 0;
-     std::ifstream file("words1.txt");
+     //std::cout << line;
+     // while (line.length() > 0)
+     // {
+           pick_tiles(line, board);
+     //      play_for_word(board, found_words, score);
+     // }
 
-     while (line.size() > 0)
-     {
-          pick_tiles(line, board);
-          play_for_word(file, board);
-
-     }
-
-     std::cout << score << " -- " << plays;
+     //std::cout << score << " -- " << plays;
 
      return 0;
 }
