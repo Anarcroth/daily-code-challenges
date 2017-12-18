@@ -24,7 +24,7 @@
 std::string to_binary(int n)
 {
      std::string r;
-     while(n!=0)
+     while (n != 0)
      {
           r = (n % 2 == 0 ? "0" : "1") + r;
           n /= 2;
@@ -41,7 +41,7 @@ int main()
           std::string b_num = to_binary(i);
           std::string tmp = "";
 
-          for (int c = 0; c <= b_num.length(); c++)
+          for (size_t c = 0; c <= b_num.length(); c++)
           {
                int indx = c + 1;
                (b_num[c] == '0') ? tmp += b_num[c] : tmp = "";
