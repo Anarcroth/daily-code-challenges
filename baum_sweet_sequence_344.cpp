@@ -36,24 +36,28 @@ int main()
 {
      int input;
      std::cin >> input;
-     for (int i = 0; i < input; i++)
+     for (int i = 0; i <= input; i++)
      {
           std::string b_num = to_binary(i);
           std::string tmp = "";
-          // std::for_each(b_num.begin(), b_num.end(), [&](char &c) {
-          //           (c == '0') ? tmp += c : tmp = "";n
-          //           size_t next = tmp.find(c);
-          //           //std::cout << next << " ";
-          //           if (tmp[++next] != '0')
-          //           {
-          //                (tmp.size() % 2 == 0) ? std::cout << 1 << " " : std::cout << 0 << " ";
-          //           }
-          //      });
 
-          for (int c = 0; c < b_num.length(); c++)
+          for (int c = 0; c <= b_num.length(); c++)
           {
-               (c == '0') ? tmp += c : tmp = "";
-
+               int indx = c + 1;
+               (b_num[c] == '0') ? tmp += b_num[c] : tmp = "";
+               if (b_num[indx] != '0')
+               {
+                    if (tmp.size() % 2 != 0)
+                    {
+                         std::cout << 0 << " ";
+                         break;
+                    }
+                    else if (c == b_num.length() && tmp.size() % 2 == 0)
+                    {
+                         std::cout << 1 << " ";
+                         break;
+                    }
+               }
           }
      }
      return 0;
