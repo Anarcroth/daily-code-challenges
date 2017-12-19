@@ -19,14 +19,12 @@ public:
      robot(const std::vector<std::string> &m, bool s);
 
      void set_map(const std::vector<std::string> &map);
-     void move(const char &command);
-     void set_pos(size_t pos);
+     void move(const char command);
      void display() const;
 
      size_t get_position() const;
 
      std::vector<std::string> map;
-     size_t position;
      bool started;
 };
 
@@ -41,22 +39,26 @@ void robot::set_map(const std::vector<std::string> &map)
      this->map = map;
 }
 
-void robot::set_pos(size_t pos)
-{
-     position = pos;
-}
-
 size_t robot::get_position() const
 {
-     size_t curr_pos;
-     for (auto &line : map)
+     for (int str = 0; str < map.size(); str++)
      {
-          curr_pos = line.find('M');
+          for (int m = 0; m < map[str].size(); m++)
+          {
+               if (map[str][m] == 'M')
+               {
+                    return str + m;
+               }
+          }
      }
-     return curr_pos;
 }
 
-void robot::move(const char &command)
+void robot::change_state(bool s)
+{
+     started = s;
+}
+
+void robot::move(const char command)
 {
      while (!is_started())
      {
@@ -64,6 +66,7 @@ void robot::move(const char &command)
           if (std::tolower(command) == 'i')
           {
                change_state(!is_started());
+               return;
           }
      }
      switch(std::tolower(command))
@@ -83,6 +86,7 @@ inline bool robot::is_started() const
 
 void robot::move_n()
 {
+     std::cout << get_position() << std::endl;
      for (auto &line : map)
      {
           std::cout << line.at(get_position());
@@ -111,7 +115,6 @@ void robot::display() const
 
 std::vector<std::string> get_map_by_line_from_file(std::string path)
 {
-     std::cout << "Hello";
      std::ifstream map(path.c_str());
      std::string line;
      std::vector<std::string> fl_map;
@@ -144,18 +147,17 @@ std::vector<std::string> get_map_by_input()
 
 int main()
 {
-     std::vector<std::string> map;
-     map = get_map_by_line_from_file("map.txt");
+     std::vector<std::string> map = get_map_by_line_from_file("map.txt");
      robot r(map, false);
 
      std::cout << "Enter command for the robot to move: ";
      std::string commands;
      std::getline(std::cin, commands);
 
-     for (auto &command : commands)
+     for (auto command : commands)
      {
           r.move(command);
-          r.display();
+          //r.display();
      }
 
      return 0;
