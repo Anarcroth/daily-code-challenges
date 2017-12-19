@@ -6,18 +6,32 @@
 class robot
 {
 private:
-     void move(char p);
+     void move(const std::string &commands);
+     void set_map(const std::vector<std::string> &map);
+     bool is_started() const;
 
-     bool is_started();
 public:
+     robot();
+     robot(const std::vector<std::string> &m, bool s);
+
      void move_n();
      void move_s();
      void move_e();
      void move_w();
+     void display();
 
+     std::vector<std::string> map;
      short int position;
      bool started;
 };
+
+robot::robot()
+{
+     started = false;
+}
+
+robot::robot(const std::vector<std::string> &m, bool s) : map(m), started(s)
+{}
 
 std::vector<std::string> get_map_by_line_from_file(std::string path)
 {
@@ -53,6 +67,8 @@ std::vector<std::string> get_map_by_input()
 
 int main()
 {
-     robot r;
+     std::vector<std::string> map = get_map_by_line_from_file("map.txt");
+     robot r(map, false);
+
      return 0;
 }
