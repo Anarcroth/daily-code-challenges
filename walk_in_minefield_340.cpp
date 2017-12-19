@@ -7,48 +7,75 @@ class robot
 {
 private:
      bool is_started() const;
-     
-     void set_state(bool s);
+
+     void change_state(bool s);
      void move_n();
      void move_s();
      void move_e();
      void move_w();
-     void display();
 
 public:
      robot();
      robot(const std::vector<std::string> &m, bool s);
 
      void set_map(const std::vector<std::string> &map);
-     void move(const std::string &commands);
+     void move(const char &command);
+     void display();
 
      std::vector<std::string> map;
      short int position;
      bool started;
 };
 
-robot::robot()
-{
-     started = false;
-}
+robot::robot() : started(false)
+{}
 
 robot::robot(const std::vector<std::string> &m, bool s) : map(m), started(s)
 {}
 
-void robot::move(const std::string &commands)
+void robot::move(const char &command)
 {
-     for (auto &command : commands)
+     while (!is_started())
      {
-          switch(std::tolower(command))
+          // Exit the move function if the robot is not started and skip the specific move actions
+          if (std::tolower(command) == 'i')
           {
-          case 'i': set_state(!is_started());
-          case 'n': move_n();
-          case 's': move_s();
-          case 'e': move_e();
-          case 'w': move_w();
-          default : break;
+               change_state(!is_started());
           }
      }
+     switch(std::tolower(command))
+     {
+     case 'n': move_n(); break;
+     case 's': move_s(); break;
+     case 'e': move_e(); break;
+     case 'w': move_w(); break;
+     default : std::cout << "Invalid command!" << std::endl; break;
+     }
+}
+
+inline bool robot::is_started() const
+{
+     return started;
+}
+
+void robot::move_n()
+{
+
+}
+
+void robot::move_s()
+{
+
+}
+
+void robot::move_e()
+{
+
+}
+
+void robot::move_w()
+{
+
 }
 
 std::vector<std::string> get_map_by_line_from_file(std::string path)
@@ -92,7 +119,11 @@ int main()
      std::string commands;
      std::getline(std::cin, commands);
 
-     r.move(commands);
+     for (auto &command : commands)
+     {
+          r.move(command);
+          r.display();
+     }
 
      return 0;
 }
