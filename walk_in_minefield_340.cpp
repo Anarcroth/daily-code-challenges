@@ -2,6 +2,8 @@
 #include <string>
 #include <fstream>
 #include <vector>
+#include <cstdlib>
+#include <unistd.h>
 
 class robot
 {
@@ -218,6 +220,10 @@ int main()
      for (auto command : commands)
      {
           r.move(command);
+          // pause the output for 2 seconds
+          sleep(2);
+          // reset the terminal, i.e. the output
+          printf("\033c");
           r.display();
      }
 
