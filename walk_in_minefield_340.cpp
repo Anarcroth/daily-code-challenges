@@ -31,10 +31,10 @@ public:
      void display() const;
 };
 
-robot::robot() : started(false)
+robot::robot() : x(0), y(0), started(false)
 {}
 
-robot::robot(const std::vector<std::string> &m, bool s) : map(m), started(s)
+robot::robot(const std::vector<std::string> &m, bool s) : map(m), x(0), y(0), started(s)
 {}
 
 void robot::set_map(const std::vector<std::string> &map)
@@ -101,48 +101,32 @@ inline bool robot::is_started() const
      return started;
 }
 
-void robot::move_n()
+void robot::move_s()
 {
      switch (map[x + 1][y])
      {
      case '*':
           std::cout << "You landed on a mine! You died!" << std::endl; break;//exit(0);
      case '0':
-          map[x + 1][y] = '0';
+          map[x][y] = '0';
           x = x + 1;
-          map[x + 1][y] = 'M';
+          map[x][y] = 'M';
           break;
      case '+':
      default: break;
      }
 }
 
-void robot::move_s()
+void robot::move_n()
 {
      switch (map[x - 1][y])
      {
      case '*':
           std::cout << "You landed on a mine! You died!" << std::endl; break;//exit(0);
      case '0':
-          map[x - 1][y] = '0';
+          map[x][y] = '0';
           x = x - 1;
-          map[x - 1][y] = 'M';
-          break;
-     case '+':
-     default: break;
-     }
-}
-
-void robot::move_e()
-{
-     switch (map[x][y - 1])
-     {
-     case '*':
-          std::cout << "You landed on a mine! You died!" << std::endl; break;//exit(0);
-     case '0':
-          map[x][y - 1] = '0';
-          y = y - 1;
-          map[x][y - 1] = 'M';
+          map[x][y] = 'M';
           break;
      case '+':
      default: break;
@@ -151,14 +135,31 @@ void robot::move_e()
 
 void robot::move_w()
 {
+     std::cout << map[x][y - 1] << std::endl;
+     switch (map[x][y - 1])
+     {
+     case '*':
+          std::cout << "You landed on a mine! You died!" << std::endl; break;//exit(0);
+     case '0':
+          map[x][y] = '0';
+          y = y - 1;
+          map[x][y] = 'M';
+          break;
+     case '+':
+     default: break;
+     }
+}
+
+void robot::move_e()
+{
      switch (map[x][y + 1])
      {
      case '*':
           std::cout << "You landed on a mine! You died!" << std::endl; break;//exit(0);
      case '0':
-          map[x][y + 1] = '0';
+          map[x][y] = '0';
           y = y + 1;
-          map[x][y + 1] = 'M';
+          map[x][y] = 'M';
           break;
      case '+':
      default: break;
