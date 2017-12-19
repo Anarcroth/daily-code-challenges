@@ -9,10 +9,18 @@ private:
      bool is_started() const;
 
      void change_state(bool s);
+     void find_robot();
      void move_n();
      void move_s();
      void move_e();
      void move_w();
+
+     size_t get_pos_x() const;
+     size_t get_pos_y() const;
+
+     std::vector<std::string> map;
+     size_t x, y;
+     bool started;
 
 public:
      robot();
@@ -21,11 +29,6 @@ public:
      void set_map(const std::vector<std::string> &map);
      void move(const char command);
      void display() const;
-
-     size_t get_position() const;
-
-     std::vector<std::string> map;
-     bool started;
 };
 
 robot::robot() : started(false)
@@ -39,7 +42,7 @@ void robot::set_map(const std::vector<std::string> &map)
      this->map = map;
 }
 
-size_t robot::get_position() const
+void robot::find_robot()
 {
      for (int str = 0; str < map.size(); str++)
      {
@@ -47,10 +50,22 @@ size_t robot::get_position() const
           {
                if (map[str][m] == 'M')
                {
-                    return str + m;
+                    x = str;
+                    y = m;
+                    break;
                }
           }
      }
+}
+
+inline size_t robot::get_pos_x() const
+{
+     return x;
+}
+
+inline size_t robot::get_pos_y() const
+{
+     return y;
 }
 
 void robot::change_state(bool s)
@@ -60,21 +75,23 @@ void robot::change_state(bool s)
 
 void robot::move(const char command)
 {
+     find_robot();
      while (!is_started())
      {
           // Exit the move function if the robot is not started and skip the specific move actions
           if (std::tolower(command) == 'i')
           {
                change_state(!is_started());
+               std::cout << "Robot started!" << std::endl;
                return;
           }
      }
      switch(std::tolower(command))
      {
-     case 'n': move_n(); break;
-     case 's': move_s(); break;
-     case 'e': move_e(); break;
-     case 'w': move_w(); break;
+     case 'n': std::cout << "Moving north!" << std::endl; move_n(); break;
+     case 's': std::cout << "Moving south!" << std::endl; move_s(); break;
+     case 'e': std::cout << "Moving east!" << std::endl; move_e(); break;
+     case 'w': std::cout << "Moving west!" << std::endl; move_w(); break;
      default : std::cout << "Invalid command!" << std::endl; break;
      }
 }
@@ -86,31 +103,74 @@ inline bool robot::is_started() const
 
 void robot::move_n()
 {
-     std::cout << get_position() << std::endl;
-     for (auto &line : map)
+     switch (map[x + 1][y])
      {
-          std::cout << line.at(get_position());
+     case '*':
+          std::cout << "You landed on a mine! You died!" << std::endl; break;//exit(0);
+     case '0':
+          map[x + 1][y] = '0';
+          x = x + 1;
+          map[x + 1][y] = 'M';
+          break;
+     case '+':
+     default: break;
      }
 }
 
 void robot::move_s()
 {
-
+     switch (map[x - 1][y])
+     {
+     case '*':
+          std::cout << "You landed on a mine! You died!" << std::endl; break;//exit(0);
+     case '0':
+          map[x - 1][y] = '0';
+          x = x - 1;
+          map[x - 1][y] = 'M';
+          break;
+     case '+':
+     default: break;
+     }
 }
 
 void robot::move_e()
 {
-
+     switch (map[x][y - 1])
+     {
+     case '*':
+          std::cout << "You landed on a mine! You died!" << std::endl; break;//exit(0);
+     case '0':
+          map[x][y - 1] = '0';
+          y = y - 1;
+          map[x][y - 1] = 'M';
+          break;
+     case '+':
+     default: break;
+     }
 }
 
 void robot::move_w()
 {
-
+     switch (map[x][y + 1])
+     {
+     case '*':
+          std::cout << "You landed on a mine! You died!" << std::endl; break;//exit(0);
+     case '0':
+          map[x][y + 1] = '0';
+          y = y + 1;
+          map[x][y + 1] = 'M';
+          break;
+     case '+':
+     default: break;
+     }
 }
 
 void robot::display() const
 {
-
+     for (auto &line : map)
+     {
+          std::cout << line << std::endl;
+     }
 }
 
 std::vector<std::string> get_map_by_line_from_file(std::string path)
@@ -157,7 +217,7 @@ int main()
      for (auto command : commands)
      {
           r.move(command);
-          //r.display();
+          r.display();
      }
 
      return 0;
