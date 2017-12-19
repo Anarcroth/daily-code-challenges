@@ -20,9 +20,13 @@ public:
 
      void set_map(const std::vector<std::string> &map);
      void move(const char &command);
+     void set_pos(size_t pos);
      void display() const;
 
+     size_t get_position() const;
+
      std::vector<std::string> map;
+     size_t position;
      bool started;
 };
 
@@ -35,6 +39,21 @@ robot::robot(const std::vector<std::string> &m, bool s) : map(m), started(s)
 void robot::set_map(const std::vector<std::string> &map)
 {
      this->map = map;
+}
+
+void robot::set_pos(size_t pos)
+{
+     position = pos;
+}
+
+size_t robot::get_position() const
+{
+     size_t curr_pos;
+     for (auto &line : map)
+     {
+          curr_pos = line.find('M');
+     }
+     return curr_pos;
 }
 
 void robot::move(const char &command)
