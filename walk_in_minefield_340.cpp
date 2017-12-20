@@ -22,21 +22,24 @@ private:
 
      std::vector<std::string> map;
      size_t x, y;
-     bool started;
+     bool started, alive;
 
 public:
      robot();
      robot(const std::vector<std::string> &m, bool s);
+
+     bool is_alive() const;
+     bool is_maze_solved() const;
 
      void set_map(const std::vector<std::string> &map);
      void move(const char command);
      void display() const;
 };
 
-robot::robot() : x(0), y(0), started(false)
+robot::robot() : x(0), y(0), started(false), alive(true)
 {}
 
-robot::robot(const std::vector<std::string> &m, bool s) : map(m), x(0), y(0), started(s)
+robot::robot(const std::vector<std::string> &m, bool s) : map(m), x(0), y(0), started(s), alive(true)
 {}
 
 void robot::set_map(const std::vector<std::string> &map)
@@ -94,6 +97,7 @@ void robot::move(const char command)
      case 's': std::cout << "Moving south!" << std::endl; move_s(); break;
      case 'e': std::cout << "Moving east!" << std::endl; move_e(); break;
      case 'w': std::cout << "Moving west!" << std::endl; move_w(); break;
+     case '-': change_state(!is_started()); std::cout << "Robot stopped!" << std::endl; break;
      default : std::cout << "Invalid command!" << std::endl; break;
      }
 }
@@ -103,12 +107,24 @@ inline bool robot::is_started() const
      return started;
 }
 
+bool robot::is_maze_solved() const
+{
+     if (get_pos_y() == map[0].size() - 1 && alive)
+     {
+          std::cout << "You solved the maze!" << std::endl;
+          return true;
+     }
+     return false;
+}
+
 void robot::move_s()
 {
      switch (map[x + 1][y])
      {
      case '*':
-          std::cout << "You landed on a mine! You died!" << std::endl; break;//exit(0);
+          std::cout << "You landed on a mine! You died!" << std::endl;
+          alive = false;
+          break;
      case '0':
           map[x][y] = '0';
           x = x + 1;
@@ -124,7 +140,9 @@ void robot::move_n()
      switch (map[x - 1][y])
      {
      case '*':
-          std::cout << "You landed on a mine! You died!" << std::endl; break;//exit(0);
+          std::cout << "You landed on a mine! You died!" << std::endl;
+          alive = false;
+          break;
      case '0':
           map[x][y] = '0';
           x = x - 1;
@@ -141,7 +159,9 @@ void robot::move_w()
      switch (map[x][y - 1])
      {
      case '*':
-          std::cout << "You landed on a mine! You died!" << std::endl; break;//exit(0);
+          std::cout << "You landed on a mine! You died!" << std::endl;
+          alive = false;
+          break;
      case '0':
           map[x][y] = '0';
           y = y - 1;
@@ -157,7 +177,9 @@ void robot::move_e()
      switch (map[x][y + 1])
      {
      case '*':
-          std::cout << "You landed on a mine! You died!" << std::endl; break;//exit(0);
+          std::cout << "You landed on a mine! You died!" << std::endl;
+          alive = false;
+          break;
      case '0':
           map[x][y] = '0';
           y = y + 1;
@@ -174,6 +196,11 @@ void robot::display() const
      {
           std::cout << line << std::endl;
      }
+}
+
+inline bool robot::is_alive() const
+{
+     return alive;
 }
 
 std::vector<std::string> get_map_by_line_from_file(std::string path)
@@ -217,14 +244,24 @@ int main()
      std::string commands;
      std::getline(std::cin, commands);
 
-     for (auto command : commands)
+
+     while (r.is_alive())
      {
-          r.move(command);
-          // pause the output for 2 seconds
-          sleep(2);
-          // reset the terminal, i.e. the output
-          printf("\033c");
-          r.display();
+          for (auto command : commands)
+          {
+               r.move(command);
+               // pause the output for 2 seconds
+               sleep(1);
+               // reset the terminal, i.e. the output
+               printf("\033c");
+               r.display();
+
+               if (r.is_maze_solved())
+               {
+                    std::cout << "You Win!" << std::endl;
+                    return 0;
+               }
+          }
      }
 
      return 0;
