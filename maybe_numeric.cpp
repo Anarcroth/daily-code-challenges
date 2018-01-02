@@ -4,21 +4,37 @@
 
 std::string maybe_numeric(std::string& maybe)
 {
-     std::string nums = "1234567890";
+     std::string nums = "1234567890 .eABCDEFx";
 
-     bool answr = true;
+     std::string answr = "";
 
      std::for_each(maybe.begin(), maybe.end(), [&](char& c) {
                if (nums.find(c) != std::string::npos)
                {
+                    if (c == ' ')
+                    {
+                         answr = "Array";
+                    }
+                    else if (c == 'e')
+                    {
+                         answr = "Exponent";
+                    }
+                    else if (c == '.')
+                    {
+                         answr = "Decimal";
+                    }
+                    else if (c == 'x')
+                    {
+                         answr = "Hexadecimal";
+                    }
                }
                else
                {
-                    answr = false;
+                    answr = "String";
                }
           });
 
-     return (answr == true) ? "Number" : "String";
+     return answr;
 }
 
 int main()
