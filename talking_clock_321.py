@@ -23,4 +23,29 @@
 
 import string
 
-time = "";
+time = raw_input("Enter a time: ");
+
+hours = int(time[0:2]);
+minutes = int(time[3:]);
+
+one_to_twelve = ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve"];
+tens = ["ten", "twenty", "thirty", "forty", "fifty", "twelve"];
+
+h = "";
+m = "";
+
+if hours == 0:
+    h = one_to_twelve[11];
+else:
+    h = one_to_twelve[hours % 12 - 1] + " ";
+
+a_or_p_m = "pm" if hours > 11 else "am";
+
+if minutes == 0:
+    m = " ";
+elif minutes < 10:
+    m = "oh " + one_to_twelve[minutes - 1] + " ";
+else:
+    m = tens[minutes / 10 - 1] + " " + one_to_twelve[minutes % 10 - 1] + " " if minutes % 10 == 0 else "";
+
+print "It's " + h + m + a_or_p_m;
