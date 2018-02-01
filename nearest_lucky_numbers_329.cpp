@@ -47,44 +47,44 @@
 
 int main()
 {
-  std::cout << "Enter a number: ";
-  int n;
-  std::cin >> n;
+    std::cout << "Enter a number: ";
+    int n;
+    std::cin >> n;
 
-  std::vector<int> numbers;
+    std::vector<int> numbers;
 
-  for (int i = 1; i <= n; i++)
+    for (int i = 1; i <= n; i++)
     {
-      numbers.push_back(i);
+        numbers.push_back(i);
     }
 
-  int step = 1;
-
-  for (size_t i = 1; i < numbers.size(); i++)
+    for (size_t i = 1; i < numbers.size(); i++)
     {
-      numbers.erase(numbers.begin() + i);
+        numbers.erase(numbers.begin() + i);
     }
 
-  while (step < (int)numbers.size())
+    int step = 1;
+
+    while (step < (int)numbers.size())
     {
-      for (int i = numbers[step] - 1; i < (int)numbers.size(); i += numbers[step] - 1)
+        for (int i = numbers.at(step) - 1; i < (int)numbers.size(); i += numbers[step] - 1)
         {
-          numbers.erase(numbers.begin() + step);
+            numbers.erase(numbers.begin() + step);
         }
-      step += 1;
+        step += 1;
     }
 
-  for (auto it = numbers.begin(); it != numbers.end(); ++it)
+    for (auto it = numbers.begin(); it != numbers.end(); ++it)
     {
-      if (*it == n)
+        if (*it == n)
         {
-          std::cout << "The Lucky number is: " << *it << std::endl;
+            std::cout << "The Lucky number is: " << *it << std::endl;
         }
-      else
+        else
         {
-          std::cout << *--it << " " << n << " " << *++it << std::endl;
+            std::cout << *--it << " " << n << " " << *++it << std::endl;
         }
     }
 
-  return  0;
+    return  0;
 }
