@@ -73,17 +73,30 @@
 
 import re
 
+def concat_date(extension, date, n1, n2):
+    crt_d = "";
+    if extension == True:
+        crt_d += "20";
+    crt_d += date + "-";
+    crt_d += wrong_date[n1] + "-";
+    crt_d += wrong_date[n2];
+    return crt_d;
+
 wrong_date =  input("Enter date: ");
 wrong_date = re.split("[\s/-]", wrong_date);
 correct_date = "";
 for date in  wrong_date:
-    if len(date) == 4 or wrong_date.index(date) == 0:
-        correct_date += date + "-";
-        correct_date += wrong_date[0] + "-";
-        correct_date += wrong_date[1];
+    if len(date) == 4 and wrong_date.index(date) == 2:
+        correct_date = concat_date(False, date, 0, 1);
+        break;
     elif len(date) == 4 and wrong_date.index(date) == 0:
-        correct_date += date + "-";
-        correct_date += wrong_date[1] + "-";
-        correct_date += wrong_date[0];
+        correct_date = concat_date(False, date, 1, 2);
+        break;
+    elif len(date) == 2 and wrong_date.index(date) == 2 and len(date) > len(wrong_date[0]):
+        correct_date = concat_date(True, date, 0, 1);
+        break;
+    elif len(date) == 0 and wrong_date.index(date) == 2 and len(date) > len(wrong_date[2]):
+        correct_date = concat_date(True, date, 1, 2);
+        break;
 
 print(correct_date);
