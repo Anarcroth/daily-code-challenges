@@ -104,7 +104,7 @@ public:
     GarageDoor();
 
     void show_state();
-    void cycle_state();
+    void cycle_state(int st);
 
 private:
 
@@ -120,8 +120,12 @@ void GarageDoor::show_state()
     std::cout << state << std::endl;
 }
 
-void GarageDoor::cycle_state()
+void GarageDoor::cycle_state(int st)
 {
+    // TODO change state so that there is a flagged passed down that
+    // stops the garage door or not
+    // bring back the  isopened method
+    // bring back the opened and pressed buttons state
     switch(counter)
     {
     case 0: // CLOSED
@@ -158,6 +162,7 @@ int main()
     char button = ' ';
     bool quit = false;
 
+    int state = 0;
     GarageDoor gd;
     while (!quit)
     {
@@ -166,16 +171,9 @@ int main()
         std::cout << "Press button?" << std::endl;
         std::cin >> button;
 
-        switch (button)
-        {
-        case 'y':
-            gd.cycle_state(); break;
-        case 'q':
-            quit = true; break;
-        default:
-            break;
-        }
-        gd.cycle_state();
+        if (button == 'y') { gd.cycle_state(state); }
+        else if (button == 'q') { quit = true; }
+        else { gd.cycle_state(state); }
     }
 
     return 0;
