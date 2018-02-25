@@ -34,7 +34,7 @@
 # Challenge Input
 #
 # 31337357
-#
+
 n = int(input("Enter a number: "));
 
 while n > 1:
