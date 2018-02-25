@@ -1,101 +1,101 @@
 #!bin/python3
 
 class node:
-    def __init__(self, init_key):
-        self.key = init_key;
-        self.next = None;
+    def __init__(self, key):
+        self._key = key;
+        self._next = None;
 
     def get_key(self):
-        return self.key;
+        return self._key;
 
     def get_next(self):
         return self.next;
 
     def set_key(self, key):
-        self.key = key;
+        self._key = key;
 
-    def set_next(self, _next):
-        self.next = _next;
+    def set_next(self, n_next):
+        self._next = n_next;
 
 class linked_list:
+    def __init__(self, head, tail):
+        self._head = head;
+        self._tail = tail;
+
     def insert_position(val, pos):
-        previous = node();
-        temp = node();
+        _prev = node();
+        _tmp = node();
 
-        current = None;
+        _cur = None;
 
-        current = head;
+        _cur = head;
 
         for i in range(1, pos):
-            previous = current;
-            current = current._next;
+            _prev = _cur;
+            _cur = _cur._next;
 
-        temp.key = val;
-        previous._next = temp;
-        temp._next = current;
+        _tmp.key = val;
+        _prev._next = _tmp;
+        _tmp._next = _cur;
 
     def delete_position(pos):
-        current = head;
-        previous = node();
+        _cur = head;
+        _prev = node();
 
         for i in range(1, pos):
-            previous = current;
-            currnet = currnet._next;
+            _prev = _cur;
+            _cur = _cur._next;
 
-        previous._next = current._next;
+        _prev._next = _cur._next;
 
         del currnet;
 
     def insert_start(val):
-        temp = node();
-        temp.key = val;
-        temp._next = head;
-        head = temp;
+        _tmp = node();
+        _tmp.key = val;
+        _tmp._next = head;
+        head = _tmp;
 
     def insert_node(val):
-        temp = node();
-        temp.key = val;
-        temp._next = None;
+        _tmp = node();
+        _tmp.key = val;
+        _tmp._next = None;
 
         if head is None:
-            head = temp;
-            tail = temp;
-            temp = None;
+            head = _tmp;
+            tail = _tmp;
+            _tmp = None;
         else:
-            temp._next = temp;
-            tail = temp;
-            temp = None;
+            _tmp._next = _tmp;
+            tail = _tmp;
+            _tmp = None;
 
     def delete_first():
-        temp = None;
-        temp = head;
+        _tmp = None;
+        _tmp = head;
         head = head_next;
 
-        del temp;
+        del _tmp;
 
     def delete_last():
-        current = None;
-        previous = node();
-        current = head;
-        while current._next is not None:
-            previous = current;
-            currnet = current._nextl
+        _cur = None;
+        _prev = node();
+        _cur = head;
+        while _cur._next is not None:
+            _prev = _cur;
+            currnet = _cur._nextl
 
-        tail = previous;
-        previous._next = None;
+        tail = _prev;
+        _prev._next = None;
 
-        del current;
+        del _cur;
 
     def display():
-        temp = head;
+        _tmp = head;
 
-        while temp is not None:
-            print(temp.key);
-            temp = temp._next;
-
-    head = node;
-    tail = node;
-
+        while _tmp is not None:
+            print(_tmp.key);
+            _tmp = _tmp._next;
 
 if __name__ == "__main__":
     ll = linked_list();
