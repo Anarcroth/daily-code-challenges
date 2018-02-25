@@ -26,7 +26,7 @@ class linked_list:
         _prev = None;
         _cur = self._head;
 
-        for i in range(self, 1, pos):
+        for i in range(1, int(pos)):
             _prev = _cur;
             _cur = _cur.get_next();
 
@@ -38,11 +38,11 @@ class linked_list:
         _cur = self._head;
         _prev = None;
 
-        for i in range(1, pos):
+        for i in range(1, int(pos)):
             _prev = _cur;
             _cur = _cur.get_next();
 
-        _prev.set_next(_cur.get_next);
+        _prev.set_next(_cur.get_next());
 
     def insert_start(self, val):
         _tmp = node(val);
@@ -80,6 +80,21 @@ class linked_list:
             print(_tmp.get_key());
             _tmp = _tmp.get_next();
 
+def check_for_pal(linked_list):
+    _tmp = linked_list._head;
+
+    tmp_ll_vals = [];
+    while _tmp is not None:
+        tmp_ll_vals.append(_tmp.get_key());
+        _tmp = _tmp.get_next();
+
+    for index, n in enumerate(tmp_ll_vals):
+        if n == tmp_ll_vals[len(tmp_ll_vals) - index - 1]:
+            print(n, " - ", tmp_ll_vals[len(tmp_ll_vals) - index - 1]);
+
+        if index == int(len(tmp_ll_vals) / 2):
+            break;
+
 if __name__ == "__main__":
     ll = linked_list();
 
@@ -114,3 +129,5 @@ if __name__ == "__main__":
 
         elif answer == 5:
             answer = 0;
+
+    check_for_pal(ll);
