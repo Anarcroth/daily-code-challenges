@@ -7,13 +7,19 @@
 #include <string>
 #include <set>
 #include <algorithm>
-#include <iterator>
+#include <stdexcept>
 
 int main()
 {
-    std::string vampire_num;
-    std::cin >> vampire_num;
+    std::string input;
+    std::cin >> input;
 
+    if (input.size() % 2 != 0)
+    {
+        throw std::length_error("Input is not an even number!");
+    }
+
+    std::string vampire_num(input);
     std::set<int> separated_nums;
     do
     {
@@ -23,8 +29,8 @@ int main()
 
     for (auto i = separated_nums.begin(); i != separated_nums.end(); ++i)
     {
-        int del = std::stoi(vampire_num) * 10  / *i;
-        if (separated_nums.find(del) != separated_nums.end() && del * *i == std::stoi(vampire_num) * 10)
+        int del = std::stoi(input)  / *i;
+        if (separated_nums.find(del) != separated_nums.end() && del * *i == std::stoi(input))
         {
             std::cout << "The vampire pair is " << *i << ", " << del << std::endl;
             break;
