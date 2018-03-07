@@ -1,5 +1,7 @@
 #!bin/python3
 
+#Twin primes are a pair of primes that differ by two. For example (3,5),  (5,7),  (11,13) are twin primes. Write a program to display all twin primes less than 1000.
+
 from itertools import cycle
 
 def is_prime(n):

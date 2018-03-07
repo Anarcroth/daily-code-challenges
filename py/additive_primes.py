@@ -1,5 +1,7 @@
 #!bin/python3
 
+#A prime number is an additive prime number if the sum of its digits is also a prime number. Write program to display the first 25 additive prime numbers.
+
 def is_prime(n):
     prime_range = []
     for x in range(1, n + 1):

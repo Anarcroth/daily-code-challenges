@@ -1,5 +1,9 @@
 #!bin/python3
 
+#A palindromic prime is a prime number and also palindromic. 131 is a palindromic prime.
+
+#An emirp (prime spelled backward) is a non palindromic prime number whose reversal is also a prime. For example. 17 is prime and 71 is prime. So 17 and 71 are emirps. Write a program to display the first 100 emirps.
+
 def is_prime(n):
     prime_range = []
     for x in range(1, n + 1):
