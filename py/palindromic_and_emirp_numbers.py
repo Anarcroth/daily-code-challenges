@@ -15,7 +15,7 @@ def is_prime(n):
 count = 1
 n = 1
 while count < 101:
-    if is_prime(n) and is_prime(int(str(n)[::-1])):
+    if is_prime(n) and is_prime(int(str(n)[::-1])) and n != int(str(n)[::-1]):
         print(count, "- prime: ", n," / emirp: ", int(str(n)[::-1]))
         count += 1
     n += 1
