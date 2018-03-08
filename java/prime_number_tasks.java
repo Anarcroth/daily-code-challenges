@@ -8,6 +8,15 @@ public class PrimeNumberTasks {
 
     }
 
+    private boolean isPrime(int n) {
+        for(int divisor = 2; divisor <= n / 2; divisor++) {
+            if (n % divisor == 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     private static Set<String> generatePerm(String input) {
         Set<String> set = new HashSet<String>();
         if (input.equals("")) {
@@ -51,7 +60,13 @@ public class PrimeNumberTasks {
     }
 
     public void emirpNumbers() {
-
+        isPrime = true;
+        for(int divisor = 2; divisor <= num / 2; divisor++) {
+            if (num % divisor == 0) {
+                isPrime = false;
+                break; // num is not a prime, no reason to continue checking
+            }
+        }
     }
 
     public void additivePrimes() {
@@ -77,10 +92,6 @@ public class PrimeNumberTasks {
         }
 
         private boolean isAbundant(int n) {
-
-        }
-
-        private boolean isPrime(int n) {
 
         }
     }
