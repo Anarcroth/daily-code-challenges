@@ -69,9 +69,18 @@ public class PrimeNumberTasks {
         }
     }
 
-    public void additivePrimes() {
-
+    public void additivePrimes(Integer n) {
+        int sum_n = 0;
+        int temp = n;
+        while (temp > 0) {
+            sum_n += temp % 10;
+            temp = temp / 10;
+        }
+        if (isPrime(sum_n) && isPrime(n)) {
+            System.out.println("An additive prime is " + n);
+        }
     }
+
 
     public void marsennePrimes() {
 
