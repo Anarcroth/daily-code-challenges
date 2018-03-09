@@ -59,13 +59,11 @@ public class PrimeNumberTasks {
         }
     }
 
-    public void emirpNumbers() {
-        isPrime = true;
-        for(int divisor = 2; divisor <= num / 2; divisor++) {
-            if (num % divisor == 0) {
-                isPrime = false;
-                break; // num is not a prime, no reason to continue checking
-            }
+    public void emirpNumbers(Integer n) {
+        String rev_n = new StringBuilder(n).reverse().toString();
+        Integer rn = Integer.parseInt(rev_n);
+        if (isPrime(n) && isPrime(rn) && !n.equals(rn)) {
+            Syste.our.println("prime: " + n + " / emirp: " + rn);
         }
     }
 
