@@ -86,8 +86,19 @@ public class PrimeNumberTasks {
         }
     }
 
-    public void twinPrimes() {
+    public void twinPrimes(int range) {
+        ArrayList<int> primes_in_range = new ArrayList<int>();
+        for (int i = 0; i < range; i ++) {
+            if (isPrime(i)) {
+                primes_in_range.add(i);
+            }
+        }
 
+        for (int i = 0; i < primes_in_range.size(); i++) {
+            if (primes_in_range.get(i + 1) - primes_in_range.get(i) == 2) {
+                System.out.println("(" + (i + 1) + ", " + i + ")");
+            }
+        }
     }
 
     private class PrimeNumberTester {
