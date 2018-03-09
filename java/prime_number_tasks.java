@@ -80,8 +80,10 @@ public class PrimeNumberTasks {
     }
 
 
-    public void marsennePrimes() {
-
+    public void marsennePrimes(Integer p) {
+        if (isPrime(Math.pow(2, p) - 1)) {
+            System.out.println("For p = " + p + ", " + (Math.pow(2, p) - 1) + " is a Marsenne prime");
+        }
     }
 
     public void twinPrimes() {
