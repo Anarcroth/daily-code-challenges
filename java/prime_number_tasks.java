@@ -60,10 +60,9 @@ public class PrimeNumberTasks {
     }
 
     public void emirpNumbers(Integer n) {
-        String rev_n = new StringBuilder(n).reverse().toString();
-        Integer rn = Integer.parseInt(rev_n);
-        if (isPrime(n) && isPrime(rn) && !n.equals(rn)) {
-            Syste.our.println("prime: " + n + " / emirp: " + rn);
+        Integer rev_n = Integer.parseInt(new StringBuilder(n.toString()).reverse().toString());
+        if (isPrime(n) && isPrime(rev_n) && !n.equals(rev_n)) {
+            System.out.println("prime: " + n + " / emirp: " + rev_n);
         }
     }
 
@@ -81,13 +80,13 @@ public class PrimeNumberTasks {
 
 
     public void marsennePrimes(Integer p) {
-        if (isPrime(Math.pow(2, p) - 1)) {
+        if ((int)isPrime(Math.pow(2, p) - 1)) {
             System.out.println("For p = " + p + ", " + (Math.pow(2, p) - 1) + " is a Marsenne prime");
         }
     }
 
     public void twinPrimes(int range) {
-        ArrayList<int> primes_in_range = new ArrayList<int>();
+        ArrayList<Integer> primes_in_range = new ArrayList<Integer>();
         for (int i = 0; i < range; i ++) {
             if (isPrime(i)) {
                 primes_in_range.add(i);
@@ -103,16 +102,37 @@ public class PrimeNumberTasks {
 
     private class PrimeNumberTester {
 
-        private boolean isPerfect(int n) {
+        public int prNumber;
 
+        private ArrayList<Integer> range;
+
+        public PrimeNumberTester(int prNumber) {
+            this.prNumber = prNumber;
+        }
+
+        public void assign(int prNumber) {
+            this.prNumber = prNumber;
+
+            range = new ArrayList<>(prNumber);
+            for (int i = 0; i < prNumber; i++) {
+                range.add(i);
+            }
+        }
+
+        private int sumOfDivisors() {
+            return range.stream().mapToInt(Integer::intValue).sum();
+        }
+
+        private boolean isPerfect(Integer n) {
+            return (prNumber == sumOfDivisors()) ? true : false;
         }
 
         private boolean isDeficient(int n) {
-
+            return (prNumber < sumOfDivisors()) ? true : false;
         }
 
         private boolean isAbundant(int n) {
-
+            return (prNumber > sumOfDivisors()) ? true : false;
         }
     }
 }
