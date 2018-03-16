@@ -43,10 +43,12 @@
 #
 #In this case, you can assume you're given a list of primes instead of the number itself. (To check your solution, the output for this input ends in 22.)
 
+from math import sqrt
+
 A = int(input("Enter a number: "))
 
 _sums = []
-for i in range(1, A + 1):
+for i in range(1, int(sqrt(A )) + 1):
     if A % i == 0:
         _sums.append(int(A / i) + i)
 
