@@ -72,11 +72,7 @@ bool is_prime(uint64_t n)
         return true;
     }
 
-    if (n % 2 == 0)
-    {
-        return false;
-    }
-    else if (n % 3 == 0)
+    if (n % 2 == 0 || n % 3 == 0)
     {
         return false;
     }
