@@ -7,7 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-public class coordinatesystem {
+public class CoordinateSystem {
 
 	private JButton convert;
 	private JTextField textField1;
@@ -15,7 +15,7 @@ public class coordinatesystem {
 	private JPanel panel1;
 	private JTextArea textArea1;
 
-	public coordinatesystem() {
+	public CoordinateSystem() {
 
 		convert.addActionListener(new ActionListener() {
 
@@ -29,10 +29,10 @@ public class coordinatesystem {
 
 	public static void main(String[] args) {
 		JFrame frame = new JFrame("Coordinates");
-		frame.setContentPane(new coordinatesystem().panel1);
+		frame.setContentPane(new CoordinateSystem().panel1);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.pack();
 		frame.setVisible(true);
-	}
 
+	}
 }
