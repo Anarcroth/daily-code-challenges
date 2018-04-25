@@ -1,0 +1,78 @@
+[
+  {
+    "fl": null,
+    "Seat": "18A",
+    "FlightID": "CA123",
+    "LastName": "Nestorov",
+    "FirstName": "Martin",
+    "TicketType": "Two-Way",
+    "Destination": "Sofia",
+    "TravelDate": "2017-12-06T00:00:00"
+  },
+  {
+    "fl": null,
+    "Seat": "18B",
+    "FlightID": "CA123",
+    "LastName": "KC",
+    "FirstName": "Kejsi",
+    "TicketType": "Two-Way",
+    "Destination": "Sofia",
+    "TravelDate": "2017-12-06T00:00:00"
+  },
+  {
+    "fl": null,
+    "Seat": "20C",
+    "FlightID": "FF609",
+    "LastName": "Velev",
+    "FirstName": "Ilian",
+    "TicketType": "One-Way",
+    "Destination": "Sofia",
+    "TravelDate": "2017-12-06T00:00:00"
+  },
+  {
+    "fl": null,
+    "Seat": "01D",
+    "FlightID": "FF609",
+    "LastName": "Tomov",
+    "FirstName": "Kiril",
+    "TicketType": "Two-Way",
+    "Destination": "Sofia",
+    "TravelDate": "2017-12-06T00:00:00"
+  },
+  {
+    "fl": {
+      "pl": null,
+      "To": "Pristina",
+      "From": "Burgas",
+      "Time": "10:10",
+      "Date": "2017-02-28T00:00:00",
+      "PlaneID": "123",
+      "FlightID": "FF609"
+    },
+    "Seat": "1A16B",
+    "FlightID": "FF609",
+    "LastName": "Hasanaj",
+    "FirstName": "Euxhen",
+    "TicketType": "One-Way",
+    "Destination": "Pristina",
+    "TravelDate": "0001-01-01T00:00:00"
+  },
+  {
+    "fl": {
+      "pl": null,
+      "To": "Sofia",
+      "From": "Frankfurt",
+      "Time": "17:05",
+      "Date": "2017-12-06T00:00:00",
+      "PlaneID": "445",
+      "FlightID": "CA123"
+    },
+    "Seat": "1A4",
+    "FlightID": "CA123",
+    "LastName": "KC",
+    "FirstName": "Kejsi",
+    "TicketType": "Two-Way",
+    "Destination": "Sofia",
+    "TravelDate": "2018-04-15T00:00:00"
+  }
+]

@@ -1,0 +1,38 @@
+[
+  {
+    "ID": "CA123",
+    "TakeOff": "Frankfurt",
+    "Arrival": "Sofia",
+    "Stopover": "Munich",
+    "Type": "Beoing 747",
+    "NumPassengers": "144",
+    "NumRows": "24",
+    "Dinnig": "True",
+    "TakeOffDate": "06 Dec 2017",
+    "ArrivalDate": "06 Dec 2017"
+  },
+  {
+    "ID": "CD523",
+    "TakeOff": "Wiena",
+    "Arrival": "Plovdiv",
+    "Stopover": "",
+    "Type": "Beoing 747",
+    "NumPassengers": "144",
+    "NumRows": "24",
+    "Dinnig": "True",
+    "TakeOffDate": "06 Dec 2017",
+    "ArrivalDate": "06 Dec 2017"
+  },
+  {
+    "ID": "FF609",
+    "TakeOff": "Burgas",
+    "Arrival": "Pristina",
+    "Stopover": "Munich",
+    "Type": "Beoing 747",
+    "NumPassengers": "144",
+    "NumRows": "24",
+    "Dinnig": "True",
+    "TakeOffDate": "06 Dec 2017",
+    "ArrivalDate": "06 Dec 2017"
+  }
+]

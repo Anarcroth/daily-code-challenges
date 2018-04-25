@@ -1,0 +1,74 @@
+[
+  {
+    "pl": null,
+    "To": "Sofia",
+    "From": "Frankfurt",
+    "Time": "17:05",
+    "Date": "06 Dec 2017",
+    "PlaneID": "445",
+    "FlightID": "CA123"
+  },
+  {
+    "pl": null,
+    "To": "Sofia",
+    "From": "Frankfurt",
+    "Time": "17:15",
+    "Date": "06 Dec 2017",
+    "PlaneID": "665",
+    "FlightID": "CD523"
+  },
+  {
+    "pl": null,
+    "To": "Sofia",
+    "From": "Warsaw",
+    "Time": "17:50",
+    "Date": "06 Dec 2017",
+    "PlaneID": "901",
+    "FlightID": "DD552"
+  },
+  {
+    "pl": null,
+    "To": "Plovdiv",
+    "From": "Frankfurt",
+    "Time": "09:10",
+    "Date": "04 Oct 2017",
+    "PlaneID": "789",
+    "FlightID": "CD908"
+  },
+  {
+    "pl": null,
+    "To": "Pristina",
+    "From": "Burgas",
+    "Time": "10:10",
+    "Date": "28 Feb 2017",
+    "PlaneID": "123",
+    "FlightID": "FF609"
+  },
+  {
+    "pl": null,
+    "To": "London",
+    "From": "NYC",
+    "Time": "11:45",
+    "Date": "13 Apr 2017",
+    "PlaneID": "556",
+    "FlightID": "AS234"
+  },
+  {
+    "pl": null,
+    "To": "Plovdiv",
+    "From": "Barcelona",
+    "Time": "19:10",
+    "Date": "09 Mar 2017",
+    "PlaneID": "233",
+    "FlightID": "RE984"
+  },
+  {
+    "pl": null,
+    "To": "Sofia",
+    "From": "Oslo",
+    "Time": "15:20",
+    "Date": "25 Jun 2017",
+    "PlaneID": "212",
+    "FlightID": "SS145"
+  }
+]
