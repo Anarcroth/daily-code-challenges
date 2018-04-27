@@ -48,6 +48,7 @@
             this.LastNameTextBox = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.SavePlane = new System.Windows.Forms.Button();
             this.ArrivalDate = new System.Windows.Forms.Label();
             this.TakeOffDate = new System.Windows.Forms.Label();
             this.monthCalendar2 = new System.Windows.Forms.MonthCalendar();
@@ -69,9 +70,21 @@
             this.DepartureAirport = new System.Windows.Forms.Label();
             this.ArrivalAirport = new System.Windows.Forms.Label();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.Flights = new System.Windows.Forms.Label();
+            this.FlightTab = new System.Windows.Forms.Label();
+            this.FromTab = new System.Windows.Forms.Label();
+            this.ToTab = new System.Windows.Forms.Label();
+            this.DateTab = new System.Windows.Forms.Label();
+            this.TimeTab = new System.Windows.Forms.Label();
+            this.CheckPassengerButton = new System.Windows.Forms.Button();
+            this.CheckPassenger = new System.Windows.Forms.Label();
+            this.CheckPassengerTextBox = new System.Windows.Forms.TextBox();
+            this.PassengerTicket = new System.Windows.Forms.Label();
             this.NewBooking.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
+            this.tabPage4.SuspendLayout();
             this.SuspendLayout();
             // 
             // FirstName
@@ -132,6 +145,9 @@
             // TicketTypeCombo
             // 
             this.TicketTypeCombo.FormattingEnabled = true;
+            this.TicketTypeCombo.Items.AddRange(new object[] {
+            "One-Way",
+            "Two-Way"});
             this.TicketTypeCombo.Location = new System.Drawing.Point(132, 128);
             this.TicketTypeCombo.Name = "TicketTypeCombo";
             this.TicketTypeCombo.Size = new System.Drawing.Size(155, 21);
@@ -207,6 +223,13 @@
             // RowAlignmentCombo
             // 
             this.RowAlignmentCombo.FormattingEnabled = true;
+            this.RowAlignmentCombo.Items.AddRange(new object[] {
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F"});
             this.RowAlignmentCombo.Location = new System.Drawing.Point(132, 182);
             this.RowAlignmentCombo.Name = "RowAlignmentCombo";
             this.RowAlignmentCombo.Size = new System.Drawing.Size(155, 21);
@@ -225,6 +248,107 @@
             // SeatRowCombo
             // 
             this.SeatRowCombo.FormattingEnabled = true;
+            this.SeatRowCombo.Items.AddRange(new object[] {
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22",
+            "23",
+            "24",
+            "25",
+            "26",
+            "27",
+            "28",
+            "29",
+            "30",
+            "31",
+            "32",
+            "33",
+            "34",
+            "35",
+            "36",
+            "37",
+            "38",
+            "39",
+            "40",
+            "41",
+            "42",
+            "43",
+            "44",
+            "45",
+            "46",
+            "47",
+            "48",
+            "49",
+            "50",
+            "51",
+            "52",
+            "53",
+            "54",
+            "55",
+            "56",
+            "57",
+            "58",
+            "59",
+            "60",
+            "61",
+            "62",
+            "63",
+            "64",
+            "65",
+            "66",
+            "67",
+            "68",
+            "69",
+            "70",
+            "71",
+            "72",
+            "73",
+            "74",
+            "75",
+            "76",
+            "77",
+            "78",
+            "79",
+            "80",
+            "81",
+            "82",
+            "83",
+            "84",
+            "85",
+            "86",
+            "87",
+            "88",
+            "89",
+            "90",
+            "91",
+            "92",
+            "93",
+            "94",
+            "95",
+            "96",
+            "97",
+            "98",
+            "99",
+            "100"});
             this.SeatRowCombo.Location = new System.Drawing.Point(132, 155);
             this.SeatRowCombo.Name = "SeatRowCombo";
             this.SeatRowCombo.Size = new System.Drawing.Size(155, 21);
@@ -258,6 +382,10 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.PassengerTicket);
+            this.tabPage2.Controls.Add(this.CheckPassengerTextBox);
+            this.tabPage2.Controls.Add(this.CheckPassenger);
+            this.tabPage2.Controls.Add(this.CheckPassengerButton);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
@@ -268,6 +396,7 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.SavePlane);
             this.tabPage3.Controls.Add(this.ArrivalDate);
             this.tabPage3.Controls.Add(this.TakeOffDate);
             this.tabPage3.Controls.Add(this.monthCalendar2);
@@ -296,6 +425,16 @@
             this.tabPage3.Text = "tabPage3";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
+            // SavePlane
+            // 
+            this.SavePlane.Location = new System.Drawing.Point(119, 344);
+            this.SavePlane.Name = "SavePlane";
+            this.SavePlane.Size = new System.Drawing.Size(123, 23);
+            this.SavePlane.TabIndex = 32;
+            this.SavePlane.Text = "Save Plane";
+            this.SavePlane.UseVisualStyleBackColor = true;
+            this.SavePlane.Click += new System.EventHandler(this.SavePlane_Click);
+            // 
             // ArrivalDate
             // 
             this.ArrivalDate.AutoSize = true;
@@ -319,12 +458,14 @@
             this.monthCalendar2.Location = new System.Drawing.Point(312, 25);
             this.monthCalendar2.Name = "monthCalendar2";
             this.monthCalendar2.TabIndex = 29;
+            this.monthCalendar2.DateChanged += new System.Windows.Forms.DateRangeEventHandler(this.monthCalendar2_DateChanged);
             // 
             // monthCalendar1
             // 
             this.monthCalendar1.Location = new System.Drawing.Point(312, 212);
             this.monthCalendar1.Name = "monthCalendar1";
             this.monthCalendar1.TabIndex = 28;
+            this.monthCalendar1.DateChanged += new System.Windows.Forms.DateRangeEventHandler(this.monthCalendar1_DateChanged);
             // 
             // DinningCheckBox
             // 
@@ -466,6 +607,12 @@
             // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.Flights);
+            this.tabPage4.Controls.Add(this.FlightTab);
+            this.tabPage4.Controls.Add(this.FromTab);
+            this.tabPage4.Controls.Add(this.ToTab);
+            this.tabPage4.Controls.Add(this.DateTab);
+            this.tabPage4.Controls.Add(this.TimeTab);
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
@@ -473,6 +620,94 @@
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "tabPage4";
             this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // Flights
+            // 
+            this.Flights.AutoSize = true;
+            this.Flights.Location = new System.Drawing.Point(10, 65);
+            this.Flights.Name = "Flights";
+            this.Flights.Size = new System.Drawing.Size(0, 13);
+            this.Flights.TabIndex = 5;
+            // 
+            // FlightTab
+            // 
+            this.FlightTab.AutoSize = true;
+            this.FlightTab.Location = new System.Drawing.Point(300, 35);
+            this.FlightTab.Name = "FlightTab";
+            this.FlightTab.Size = new System.Drawing.Size(32, 13);
+            this.FlightTab.TabIndex = 4;
+            this.FlightTab.Text = "Flight";
+            // 
+            // FromTab
+            // 
+            this.FromTab.AutoSize = true;
+            this.FromTab.Location = new System.Drawing.Point(215, 35);
+            this.FromTab.Name = "FromTab";
+            this.FromTab.Size = new System.Drawing.Size(30, 13);
+            this.FromTab.TabIndex = 3;
+            this.FromTab.Text = "From";
+            // 
+            // ToTab
+            // 
+            this.ToTab.AutoSize = true;
+            this.ToTab.Location = new System.Drawing.Point(144, 35);
+            this.ToTab.Name = "ToTab";
+            this.ToTab.Size = new System.Drawing.Size(20, 13);
+            this.ToTab.TabIndex = 2;
+            this.ToTab.Text = "To";
+            // 
+            // DateTab
+            // 
+            this.DateTab.AutoSize = true;
+            this.DateTab.Location = new System.Drawing.Point(70, 35);
+            this.DateTab.Name = "DateTab";
+            this.DateTab.Size = new System.Drawing.Size(30, 13);
+            this.DateTab.TabIndex = 1;
+            this.DateTab.Text = "Date";
+            // 
+            // TimeTab
+            // 
+            this.TimeTab.AutoSize = true;
+            this.TimeTab.Location = new System.Drawing.Point(7, 35);
+            this.TimeTab.Name = "TimeTab";
+            this.TimeTab.Size = new System.Drawing.Size(30, 13);
+            this.TimeTab.TabIndex = 0;
+            this.TimeTab.Text = "Time";
+            // 
+            // CheckPassengerButton
+            // 
+            this.CheckPassengerButton.Location = new System.Drawing.Point(10, 96);
+            this.CheckPassengerButton.Name = "CheckPassengerButton";
+            this.CheckPassengerButton.Size = new System.Drawing.Size(113, 23);
+            this.CheckPassengerButton.TabIndex = 0;
+            this.CheckPassengerButton.Text = "Check";
+            this.CheckPassengerButton.UseVisualStyleBackColor = true;
+            this.CheckPassengerButton.Click += new System.EventHandler(this.CheckPassengerButton_Click);
+            // 
+            // CheckPassenger
+            // 
+            this.CheckPassenger.AutoSize = true;
+            this.CheckPassenger.Location = new System.Drawing.Point(7, 43);
+            this.CheckPassenger.Name = "CheckPassenger";
+            this.CheckPassenger.Size = new System.Drawing.Size(116, 13);
+            this.CheckPassenger.TabIndex = 1;
+            this.CheckPassenger.Text = "Enter passenger name:";
+            // 
+            // CheckPassengerTextBox
+            // 
+            this.CheckPassengerTextBox.Location = new System.Drawing.Point(10, 70);
+            this.CheckPassengerTextBox.Name = "CheckPassengerTextBox";
+            this.CheckPassengerTextBox.Size = new System.Drawing.Size(113, 20);
+            this.CheckPassengerTextBox.TabIndex = 2;
+            this.CheckPassengerTextBox.TextChanged += new System.EventHandler(this.CheckPassengerTextBox_TextChanged);
+            // 
+            // PassengerTicket
+            // 
+            this.PassengerTicket.AutoSize = true;
+            this.PassengerTicket.Location = new System.Drawing.Point(168, 43);
+            this.PassengerTicket.Name = "PassengerTicket";
+            this.PassengerTicket.Size = new System.Drawing.Size(0, 13);
+            this.PassengerTicket.TabIndex = 3;
             // 
             // AirplaneBooking
             // 
@@ -485,8 +720,12 @@
             this.NewBooking.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
+            this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
+            this.tabPage4.ResumeLayout(false);
+            this.tabPage4.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -534,6 +773,17 @@
         private System.Windows.Forms.MonthCalendar monthCalendar1;
         private System.Windows.Forms.CheckBox DinningCheckBox;
         private System.Windows.Forms.Label ArrivalDate;
+        private System.Windows.Forms.Button SavePlane;
+        private System.Windows.Forms.Label Flights;
+        private System.Windows.Forms.Label FlightTab;
+        private System.Windows.Forms.Label FromTab;
+        private System.Windows.Forms.Label ToTab;
+        private System.Windows.Forms.Label DateTab;
+        private System.Windows.Forms.Label TimeTab;
+        private System.Windows.Forms.TextBox CheckPassengerTextBox;
+        private System.Windows.Forms.Label CheckPassenger;
+        private System.Windows.Forms.Button CheckPassengerButton;
+        private System.Windows.Forms.Label PassengerTicket;
     }
 }
 

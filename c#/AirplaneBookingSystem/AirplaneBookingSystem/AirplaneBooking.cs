@@ -1,13 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Newtonsoft.Json;
 
@@ -17,60 +10,39 @@ namespace AirplaneBookingSystem
     {
         Plane pl;
         Passenger ps;
+        Flight fl;
 
         List<Plane> AllPlanes;
         List<Flight> AllFlights;
         List<Passenger> AllPassengers;
 
-        ObservableCollection<int> RowsList;
-        ObservableCollection<String> Alignments;
-        ObservableCollection<String> TicketTypes;
+        string TempPassenger;
 
         public AirplaneBooking()
         {
             InitializeComponent();
 
             ps = new Passenger();
+            pl = new Plane();
+            fl = new Flight();
 
-            PopulateRows();
-            PopulateAlignments();
-            populateTicketTypes();
-
-            LoadData();
+            ImportFileData();
+            LoadFlightSchedules();
         }
 
-        public void LoadData()
+        public void ImportFileData()
         {
-            AllPlanes = JsonConvert.DeserializeObject<List<Plane>>(LoadAll("planes"));
-            AllFlights = JsonConvert.DeserializeObject<List<Flight>>(LoadAll("flights"));
-            AllPassengers = JsonConvert.DeserializeObject<List<Passenger>>(LoadAll("passengers"));
+            AllPlanes = LoadAll<Plane>("planes");
+            AllFlights = LoadAll<Flight>("flights");
+            AllPassengers = LoadAll<Passenger>("passengers");
         }
 
-        private void populateTicketTypes()
+        public void LoadFlightSchedules()
         {
-            TicketTypes = new ObservableCollection<String>();
-            TicketTypes.Add("One-Way");
-            TicketTypes.Add("Two-Way");
-            TicketTypeCombo.DataSource = TicketTypes;
-        }
-
-        private void PopulateRows()
-        {
-            RowsList = new ObservableCollection<int>();
-            for (int i = 1; i <= 100; i++) { RowsList.Add(i); }
-            SeatRowCombo.DataSource = RowsList;
-        }
-
-        private void PopulateAlignments()
-        {
-            Alignments = new ObservableCollection<String>();
-            Alignments.Add("A");
-            Alignments.Add("B");
-            Alignments.Add("C");
-            Alignments.Add("D");
-            Alignments.Add("E");
-            Alignments.Add("F");
-            RowAlignmentCombo.DataSource = Alignments;
+            foreach (Flight f in AllFlights)
+            {
+                Flights.Text += f.Time + "    " + f.Date + "    " + f.To + "     " + f.From + "   " + f.FlightID + "\n";
+            }
         }
 
         private void FirstNameTextBox_TextChanged(object sender, EventArgs e)
@@ -108,20 +80,21 @@ namespace AirplaneBookingSystem
             ps.Seat += RowAlignmentCombo.SelectedItem.ToString();
         }
 
-        private string LoadAll(string Entity)
+        private List<T> LoadAll<T>(string Entity)
         {
             using (StreamReader r = new StreamReader(@"E:\Utility Programs\VS - C#\AirplaneBookingSystem\AirplaneBookingSystem\" + Entity + ".json"))
             {
-                return r.ReadToEnd();
+                string list = r.ReadToEnd();
+                return JsonConvert.DeserializeObject<List<T>>(list);
             }
         }
 
-        private void WriteToJson()
+        private void WriteTo<T>(string Entitiy, List<T> collection)
         {
-            using (StreamWriter file = File.CreateText(@"E:\Utility Programs\VS - C#\AirplaneBookingSystem\AirplaneBookingSystem\passengers.json"))
+            using (StreamWriter file = File.CreateText(@"E:\Utility Programs\VS - C#\AirplaneBookingSystem\AirplaneBookingSystem\" + Entitiy + "852285825825852.json"))
             {
                 JsonSerializer serializer = new JsonSerializer();
-                serializer.Serialize(file, AllPassengers);
+                serializer.Serialize(file, collection);
             }
         }
 
@@ -135,7 +108,6 @@ namespace AirplaneBookingSystem
             {
                 MessageBox.Show("Please enter the missing field(s).\n\n" + mfe.Message);
             }
-            MessageBox.Show("Your seat is free!");
         }
 
         private void BookSeat_Click(object sender, EventArgs e)
@@ -150,9 +122,7 @@ namespace AirplaneBookingSystem
             }
 
             AllPassengers.Add(ps);
-            WriteToJson();
-
-            MessageBox.Show("Your flight has been saved!");
+            WriteTo("passengers", AllPassengers);
         }
 
         private void FlightIDTextBox_TextChanged(object sender, EventArgs e)
@@ -182,17 +152,85 @@ namespace AirplaneBookingSystem
 
         private void PassengersTextBox_TextChanged(object sender, EventArgs e)
         {
-            pl.NumberPassengers = PassengersTextBox.Text
+            try
+            {
+                pl.NumberPassengers = Convert.ToInt16(PassengersTextBox.Text);
+            }
+            catch
+            {
+
+            }
         }
 
         private void RowsTextBox_TextChanged(object sender, EventArgs e)
         {
+            try
+            {
+                pl.NumberRows = Convert.ToInt32(RowsTextBox.Text);
+            }
+            catch
+            {
 
+            }
         }
 
         private void DinningCheckBox_CheckedChanged(object sender, EventArgs e)
         {
+            pl.Dinning = DinningCheckBox.Checked;
+        }
 
+        private void monthCalendar2_DateChanged(object sender, DateRangeEventArgs e)
+        {
+            monthCalendar2.MaxSelectionCount = 1;
+            pl.TakeOffDate = monthCalendar2.SelectionStart;
+        }
+
+        private void monthCalendar1_DateChanged(object sender, DateRangeEventArgs e)
+        {
+            monthCalendar1.MaxSelectionCount = 1;
+            pl.ArrivalDate = monthCalendar1.SelectionStart;
+        }
+
+        private void SavePlane_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                pl.CheckPlaneState();
+            }
+            catch (MissingFieldException mfe)
+            {
+                MessageBox.Show("Please enter the missing field(s).\n\n" + mfe.Message);
+                return;
+            }
+
+            fl.AddFlight(pl);
+            AllFlights.Add(fl);
+            WriteTo("flights", AllFlights);
+
+            AllPlanes.Add(pl);
+            WriteTo("planes", AllPlanes);
+            MessageBox.Show("Plane has been added!");
+        }
+
+        private void CheckPassengerTextBox_TextChanged(object sender, EventArgs e)
+        {
+            TempPassenger = CheckPassengerTextBox.Text;
+        }
+
+        private void CheckPassengerButton_Click(object sender, EventArgs e)
+        {
+            foreach (Passenger p in AllPassengers)
+            {
+                if ((p.FirstName + " " + p.LastName).Equals(TempPassenger) || p.FirstName.Equals(TempPassenger) || p.LastName.Equals(TempPassenger))
+                {
+                    PassengerTicket.Text = "Flight: " + p.FlightID + "\n" +
+                                           "Type: " + p.TicketType + "\n" +
+                                           "Date: " + p.TravelDate + "\n" +
+                                           "Name: " + p.FirstName + " " + p.LastName + "\n" +
+                                           "Seat: " + p.Seat + "\n" +
+                                           "Destination: " + p.Destination;
+                }
+            }
         }
     }
 }

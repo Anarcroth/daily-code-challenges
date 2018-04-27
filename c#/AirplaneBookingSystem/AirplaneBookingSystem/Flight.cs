@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AirplaneBookingSystem
 {
@@ -15,5 +11,16 @@ namespace AirplaneBookingSystem
         public DateTime Date { set; get; }
         public String PlaneID { set; get; }
         public String FlightID { set; get; }
+
+        public void AddFlight(Plane pl)
+        {
+            this.pl = pl;
+            To = pl.ArrivalPort;
+            From = pl.TakeOffPort;
+            Time = "14:05";
+            Date = pl.ArrivalDate;
+            PlaneID = pl.ID;
+            FlightID = "AAD123";
+        }
     }
 }
