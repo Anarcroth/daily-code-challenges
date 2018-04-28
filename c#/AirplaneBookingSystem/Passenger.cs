@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AirplaneBookingSystem
+namespace AirplaneBookingDLL
 {
-    class Passenger
+    public class Passenger
     {
         public Flight fl { set; get; }
         public String Seat { set; get; }
@@ -17,7 +17,7 @@ namespace AirplaneBookingSystem
         public String Destination { set; get; }
         public DateTime TravelDate { set; get; }
 
-
+        // Make sure that there are not empty data fields
         public void CheckPassengerState()
         {
             if (string.IsNullOrEmpty(FirstName))
@@ -46,13 +46,14 @@ namespace AirplaneBookingSystem
             }
         }
 
+        // Find a flight for e destination and assign that flight
         public void FindFlight(List<Flight> AllFlights)
         {
             foreach (Flight f in AllFlights)
             {
-                if (Destination.Equals(f.To))
+                if (Destination.Equals(f.Destination) && TravelDate.Equals(f.Date))
                 {
-                    Destination = f.To;
+                    Destination = f.Destination;
                     FlightID = f.FlightID;
                     fl = f;
                     return;
