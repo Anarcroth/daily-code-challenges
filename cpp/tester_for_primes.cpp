@@ -60,6 +60,18 @@ int main()
     }
 }
 
+void aks_primality_test(int n)
+{
+    if (n > 2)
+    {
+
+    }
+    else
+    {
+        return;
+    }
+}
+
 bool is_prime(int n)
 {
     switch(n)
