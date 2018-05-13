@@ -37,7 +37,7 @@ public class PrimeNumberTasks {
   }
 
   public static boolean isPrime(int n) {
-    for(int divisor = 2; divisor <= n / 2; divisor++) {
+      for(int divisor = 2; divisor <= Math.sqrt(n); divisor++) {
       if (n % divisor == 0) {
         return false;
       }
