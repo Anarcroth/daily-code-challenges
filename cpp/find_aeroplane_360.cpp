@@ -41,8 +41,11 @@
 //
 // Replace your distance function with the geodesic distance formula, which is more accurate on the Earth's surface.
 
+#include <cstdint>
 #include <iostream>
 #include <string>
+#include <memory>
+
 #include <nlohmann/json.hpp>
 #include <curl/curl.h>
 
@@ -88,6 +91,12 @@ int main()
     curl_easy_perform(curl);
     curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &http_code);
     curl_easy_cleanup(curl);
+
+    if (http_code == 200)
+    {
+        json aero_p = json::parse(*http_data);
+        std::cout << aero_p.dump();
+    }
 
     return 0;
 }
