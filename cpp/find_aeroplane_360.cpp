@@ -94,8 +94,23 @@ int main()
 
     if (http_code == 200)
     {
-        json aero_p = json::parse(*http_data);
-        std::cout << aero_p.dump();
+        if (http_data != nullptr)
+        {
+            // TODO this segfaults uppon *http_data call
+            json aero_p = json::parse(*http_data.get());
+            std::cout << aero_p.dump();
+        }
+        else
+        {
+            std::cout << "Could not parse HTTP request" << std::endl;
+            std::cout << "HTTP data was: " << *http_data.get() << std::endl;
+            return 1;
+        }
+    }
+    else
+    {
+        std::cout << "Couldn't GET from " << AEROPLANE_DATA_URL << " - exiting" << std::endl;
+        return 1;
     }
 
     return 0;
