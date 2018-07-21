@@ -1,3 +1,9 @@
+// Example commands to test
+// g++ rush02.c && echo "o--o\n|  |\n|  |\no--o" | ./a.out # SQUARE
+// g++ rush02.c && echo "o---o\n|  |\n|  |\no---o" | ./a.out # RECTANGLE
+// g++ rush02.c && echo "   o   \n  / \ \n /   \ \no-----o" | ./a.out # TRIANGLE
+// g++ rush02.c && echo "   o---o\n  /   / \n /   / \no---o" | ./a.out # DIAMOND
+
 #include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
