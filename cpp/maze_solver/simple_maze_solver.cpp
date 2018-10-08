@@ -9,16 +9,16 @@
 class robot
 {
 private:
-    void go_up();
-    void go_left();
-    void go_down();
-    void go_right();
-
     size_t x, y;
 
 public:
     robot();
     robot(int x, int y, std::string previous = "south");
+
+    bool try_north(std::vector<std::string> &maze);
+    bool try_east(std::vector<std::string> &maze);
+    bool try_south(std::vector<std::string> &maze);
+    bool try_west(std::vector<std::string> &maze);
 
     size_t get_x() const;
     size_t get_y() const;
@@ -33,6 +33,26 @@ robot::robot() : x(0), y(0), previous("south")
 
 robot::robot(int x, int y, std::string previous) : x(x), y(y), previous(previous)
 {}
+
+bool robot::try_north(std::vector<std::string> &maze)
+{
+    return maze[get_y() - 1][get_x()] != '#' ? true : false;
+}
+
+bool robot::try_east(std::vector<std::string> &maze)
+{
+    return maze[get_y()][get_x() + 1] != '#' ? true : false;
+}
+
+bool robot::try_south(std::vector<std::string> &maze)
+{
+    return maze[get_y() + 1][get_x()] != '#' ? true : false;
+}
+
+bool robot::try_west(std::vector<std::string> &maze)
+{
+    return maze[get_y()][get_x() - 1] != '#' ? true : false;
+}
 
 inline size_t robot::get_x() const
 {
@@ -52,22 +72,6 @@ inline void robot::set_x(size_t x)
 inline void robot::set_y(size_t y)
 {
     this->y = y;
-}
-
-void robot::go_right()
-{
-}
-
-void robot::go_left()
-{
-}
-
-void robot::go_down()
-{
-}
-
-void robot::go_up()
-{
 }
 
 void display(std::vector<std::string> &maze)
@@ -140,60 +144,60 @@ std::string decideWhereToMove(std::vector<std::string> &maze, robot &r)
 {
     if (r.previous == "south")
     {
-        if (maze[r.get_y()][r.get_x() - 1] != '#')
+        if (r.try_west(maze))
         {
             return "west";
         }
-        else if (maze[r.get_y() - 1][r.get_x()] != '#')
+        else if (r.try_north(maze))
         {
             return "north";
         }
-        else if (maze[r.get_y()][r.get_x() + 1] != '#')
+        else if (r.try_east(maze))
         {
             return "east";
         }
     }
     else if (r.previous == "west")
     {
-        if (maze[r.get_y() - 1][r.get_x()] != '#')
+        if (r.try_north(maze))
         {
             return "north";
         }
-        else if (maze[r.get_y()][r.get_x() + 1] != '#')
+        else if (r.try_east(maze))
         {
             return "east";
         }
-        else if (maze[r.get_y() + 1][r.get_x()] != '#')
+        else if (r.try_south(maze))
         {
             return "south";
         }
     }
     else if (r.previous == "east")
     {
-        if (maze[r.get_y() + 1][r.get_x()] != '#')
+        if (r.try_south(maze))
         {
             return "south";
         }
-        else if (maze[r.get_y()][r.get_x() - 1] != '#')
+        else if (r.try_west(maze))
         {
             return "west";
         }
-        else if (maze[r.get_y() - 1][r.get_x()] != '#')
+        else if (r.try_north(maze))
         {
             return "north";
         }
     }
     else if (r.previous == "north")
     {
-        if (maze[r.get_y()][r.get_x() + 1] != '#')
+        if (r.try_east(maze))
         {
             return "east";
         }
-        else if (maze[r.get_y() + 1][r.get_x()] != '#')
+        else if (r.try_south(maze))
         {
             return "south";
         }
-        else if (maze[r.get_y()][r.get_x() - 1] != '#')
+        else if (r.try_west(maze))
         {
             return "west";
         }
@@ -201,7 +205,7 @@ std::string decideWhereToMove(std::vector<std::string> &maze, robot &r)
     return r.previous;
 }
 
-void solve(std::vector<std::string> &maze, robot &r, int end_y, int end_x)
+void solve(std::vector<std::string> &maze, robot &r, size_t end_y, size_t end_x)
 {
     bool solved = false;
     while (!solved)
