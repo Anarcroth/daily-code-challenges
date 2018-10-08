@@ -3,7 +3,8 @@
 #include <fstream>
 #include <vector>
 #include <cstdlib>
-#include <unistd.h>
+#include <chrono>
+#include <thread>
 
 class robot
 {
@@ -94,6 +95,11 @@ std::vector<std::string> load_maze(std::string path)
         }
         map.close();
     }
+    else
+    {
+        std::cout << "Could not open file " << path << std::endl;
+        exit(1);
+    }
     return fl_map;
 }
 
@@ -116,14 +122,13 @@ std::vector<std::string> input_map()
     return fl_map;
 }
 
-std::vector<int> find_robot(std::vector<std::string> &maze)
+std::vector<int> find(std::vector<std::string> &maze, char element)
 {
     std::vector<int> xy;
     for(std::vector<int>::size_type y = 0; y != maze.size(); y++) {
-        if (maze[y].find('R') != std::string::npos)
+        if (maze[y].find(element) != std::string::npos)
         {
-            // Finds the x value of the Robot
-            xy.push_back(maze[y].find('R'));
+            xy.push_back(maze[y].find(element));
             xy.push_back(y);
             break;
         }
@@ -131,9 +136,9 @@ std::vector<int> find_robot(std::vector<std::string> &maze)
     return xy;
 }
 
-std::string decideWhereToMove(std::string prev, std::vector<std::string> &maze, robot &r)
+std::string decideWhereToMove(std::vector<std::string> &maze, robot &r)
 {
-    if (prev == "south")
+    if (r.previous == "south")
     {
         if (maze[r.get_y()][r.get_x() - 1] != '#')
         {
@@ -148,7 +153,7 @@ std::string decideWhereToMove(std::string prev, std::vector<std::string> &maze, 
             return "east";
         }
     }
-    else if (prev == "west")
+    else if (r.previous == "west")
     {
         if (maze[r.get_y() - 1][r.get_x()] != '#')
         {
@@ -163,7 +168,7 @@ std::string decideWhereToMove(std::string prev, std::vector<std::string> &maze, 
             return "south";
         }
     }
-    else if (prev == "east")
+    else if (r.previous == "east")
     {
         if (maze[r.get_y() + 1][r.get_x()] != '#')
         {
@@ -178,7 +183,7 @@ std::string decideWhereToMove(std::string prev, std::vector<std::string> &maze, 
             return "north";
         }
     }
-    else if (prev == "north")
+    else if (r.previous == "north")
     {
         if (maze[r.get_y()][r.get_x() + 1] != '#')
         {
@@ -193,58 +198,75 @@ std::string decideWhereToMove(std::string prev, std::vector<std::string> &maze, 
             return "west";
         }
     }
-    return prev;
+    return r.previous;
 }
 
-// up down left right previous
-void solve(std::vector<std::string> &maze, robot &r)
+void solve(std::vector<std::string> &maze, robot &r, int end_y, int end_x)
 {
     bool solved = false;
     while (!solved)
     {
-        if (decideWhereToMove(r.previous, maze, r) == "south")
+        display(maze);
+
+        std::string go_to = decideWhereToMove(maze, r);
+
+        if (go_to == "south")
         {
             maze[r.get_y() + 1][r.get_x()] = 'R';
             maze[r.get_y()][r.get_x()] = ' ';
-            r.set_y(r.get_y() + 1);
+            size_t curry = r.get_y();
+            r.set_y(curry + 1);
+            r.previous = "north";
         }
-        else if (decideWhereToMove(r.previous, maze, r) == "west")
+        else if (go_to == "west")
         {
             maze[r.get_y()][r.get_x() - 1] = 'R';
             maze[r.get_y()][r.get_x()] = ' ';
-            r.set_y(r.get_x() - 1);
+            size_t currx = r.get_x();
+            r.set_x(currx - 1);
+            r.previous = "east";
         }
-        else if (decideWhereToMove(r.previous, maze, r) == "north")
+        else if (go_to == "north")
         {
             maze[r.get_y() - 1][r.get_x()] = 'R';
             maze[r.get_y()][r.get_x()] = ' ';
-            r.set_y(r.get_y() - 1);
+            size_t curry = r.get_y();
+            r.set_y(curry - 1);
+            r.previous = "south";
         }
-        else if (decideWhereToMove(r.previous, maze, r) == "east")
+        else if (go_to == "east")
         {
             maze[r.get_y()][r.get_x() + 1] = 'R';
             maze[r.get_y()][r.get_x()] = ' ';
-            r.set_y(r.get_x() + 1);
+            size_t currx = r.get_x();
+            r.set_x(currx + 1);
+            r.previous = "west";
         }
 
-        // pause the output for 2 seconds
-        sleep(1);
-        // reset the terminal output
+        if (r.get_y() == end_y && r.get_x() == end_x)
+        {
+            std::cout << "Solved" << std::endl;
+            solved = true;
+            break;
+        }
+
+        // Control how fast the "animation goes"
+        std::this_thread::sleep_for(std::chrono::milliseconds(80));
         printf("\033c");
-        display(maze);
     }
 }
 
 int main()
 {
     // Load a txt map that is a maze in ascii characters.
-    // The robot should be denoted by a character - R
-    // then it is found and the maze is solved
-    std::vector<std::string> maze = load_maze("map.txt");
-    std::vector<int> pos = find_robot(maze);
+    // The robot should be denoted by a character - R, the exit by - E
+    std::vector<std::string> maze = load_maze("maze.txt");
+    std::vector<int> pos = find(maze, 'R');
+    std::vector<int> end = find(maze, 'E');
+
     robot r(pos[0], pos[1]);
 
-    solve(maze, r);
+    solve(maze, r, end[0], end[1]);
 
     std::cout << "Solved!" << std::endl;
 
