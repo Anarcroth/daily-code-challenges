@@ -13,13 +13,13 @@ The current implementation follows the left side of the walls. The solver is a s
 Here is how the algorithm works:
 
 1. Find where the robot and the exit are.
-2. Until the robot finds the exit:
+2. Move the robot to the next position:
    1. If it's coming from the **south** (i.e from the bottom of the maze), then try to go to the **west**.
    2. If there is a wall (denoted by a `#`), then go to the **north**.
    3. If there is a wall as well there, then go to the **east**.
    4. If that fails, then come back from where you came from.
    5. Check if the robot found the exit.
-   6. Repeat.
+3. Repeat.
 
 ---
 
@@ -27,7 +27,7 @@ The **maze** is generated from [here](https://www.thenerdshow.com/amaze.html?row
 
 ### How to run
 
-Get the source code and some maze (with ascii characters).
+Get the source code and some maze (with ASCII characters).
 
 Compile the code
 

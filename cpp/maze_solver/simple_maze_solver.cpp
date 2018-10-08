@@ -205,6 +205,10 @@ std::string decideWhereToMove(std::vector<std::string> &maze, robot &r)
     return r.previous;
 }
 
+/*
+  Since this is a vector of strings, first we specify `y` - the vertical position,
+  then we specify `x` - the horizontal one. That's why we have the coordinates flipped like yx.
+*/
 void solve(std::vector<std::string> &maze, robot &r, size_t end_y, size_t end_x)
 {
     bool solved = false;
@@ -214,44 +218,43 @@ void solve(std::vector<std::string> &maze, robot &r, size_t end_y, size_t end_x)
 
         std::string go_to = decideWhereToMove(maze, r);
 
+        // For every direction the robot goes, switch the characters on the map.
         if (go_to == "south")
         {
             maze[r.get_y() + 1][r.get_x()] = 'R';
             maze[r.get_y()][r.get_x()] = ' ';
-            size_t curry = r.get_y();
-            r.set_y(curry + 1);
+            size_t curr_y = r.get_y();
+            r.set_y(curr_y + 1);
             r.previous = "north";
         }
         else if (go_to == "west")
         {
             maze[r.get_y()][r.get_x() - 1] = 'R';
             maze[r.get_y()][r.get_x()] = ' ';
-            size_t currx = r.get_x();
-            r.set_x(currx - 1);
+            size_t curr_x = r.get_x();
+            r.set_x(curr_x - 1);
             r.previous = "east";
         }
         else if (go_to == "north")
         {
             maze[r.get_y() - 1][r.get_x()] = 'R';
             maze[r.get_y()][r.get_x()] = ' ';
-            size_t curry = r.get_y();
-            r.set_y(curry - 1);
+            size_t curr_y = r.get_y();
+            r.set_y(curr_y - 1);
             r.previous = "south";
         }
         else if (go_to == "east")
         {
             maze[r.get_y()][r.get_x() + 1] = 'R';
             maze[r.get_y()][r.get_x()] = ' ';
-            size_t currx = r.get_x();
-            r.set_x(currx + 1);
+            size_t curr_x = r.get_x();
+            r.set_x(curr_x + 1);
             r.previous = "west";
         }
 
         if (r.get_y() == end_y && r.get_x() == end_x)
         {
-            std::cout << "Solved" << std::endl;
             solved = true;
-            break;
         }
 
         // Control how fast the "animation goes"
@@ -270,7 +273,7 @@ int main()
 
     robot r(pos[0], pos[1]);
 
-    solve(maze, r, end[0], end[1]);
+    solve(maze, r, end[1], end[0]);
 
     std::cout << "Solved!" << std::endl;
 
